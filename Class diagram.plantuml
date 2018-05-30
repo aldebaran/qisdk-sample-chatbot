@@ -1,0 +1,73 @@
+@startuml
+
+title ChatbotSample overview class diagram
+
+skinparam titleBorderThickness 2
+
+skinparam class {
+    BorderColor Black
+	BackgroundColor<<ChatbotDevelopper>> LightBlue
+}
+hide stereotypes
+
+interface Chat {
+}
+interface Chatbot {
+    replyTo
+}
+interface QiChatbot {
+}
+abstract class BaseChatbot
+
+interface ChatbotReaction {
+    runWith
+    stop
+}
+
+interface ReplyReaction {
+    replyPriority
+}
+
+interface AutonomousReaction {
+    importance
+    validity
+}
+
+abstract class BaseChatbotReaction 
+class StandardReplyReaction 
+class StandardAutonomousReaction 
+
+class DialogflowChatbot<<ChatbotDevelopper>> {
+    replyTo
+}
+
+class ChatbotUtteredReaction<<ChatbotDevelopper>> {
+    runWith
+    stop
+}
+class ChatbotUtteredAndAnimatedReaction<<ChatbotDevelopper>> {
+    runWith
+    stop
+}
+
+Chat o-right- "n" Chatbot
+Chatbot <|-- QiChatbot
+Chatbot <|-- BaseChatbot
+BaseChatbot <|-- DialogflowChatbot
+
+Chatbot --> ReplyReaction : replies
+
+ReplyReaction <|-- StandardReplyReaction
+AutonomousReaction <|-- StandardAutonomousReaction
+
+ChatbotReaction <|-- BaseChatbotReaction
+BaseChatbotReaction <|-- ChatbotUtteredAndAnimatedReaction
+BaseChatbotReaction <|-- ChatbotUtteredReaction
+
+ReplyReaction  *-- "1" ChatbotReaction
+AutonomousReaction *-- "1" ChatbotReaction
+
+Chatbot --> AutonomousReaction : spontaneously emits
+
+
+@enduml
