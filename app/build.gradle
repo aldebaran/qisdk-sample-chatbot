@@ -7,7 +7,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.1.improve"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // CHATBOT_SAMPLE_DIALOGFLOW_TOKEN is kept out of version control (typically in your

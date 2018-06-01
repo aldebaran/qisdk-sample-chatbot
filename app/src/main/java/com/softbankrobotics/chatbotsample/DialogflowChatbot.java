@@ -6,6 +6,7 @@ package com.softbankrobotics.chatbotsample;
 
 import android.util.Log;
 
+import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbot;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbotReaction;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
@@ -29,12 +30,9 @@ public class DialogflowChatbot extends BaseChatbot {
     private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
     private static final String ANIM_ACTION = "dance";
 
-    private Robot robot;
 
-
-    DialogflowChatbot(final Robot theRobot) {
-        super(theRobot.getQiContext());
-        robot = theRobot;
+    DialogflowChatbot(final QiContext context) {
+        super(context);
     }
 
 
@@ -44,7 +42,7 @@ public class DialogflowChatbot extends BaseChatbot {
         if (phrase.getText().isEmpty()) {
             // The phrase may be empty when the robot ears something
             // but cannot recognize words. Return an empty reply.
-            EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(robot.getQiContext());
+            EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(getQiContext());
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
 
         } else {
