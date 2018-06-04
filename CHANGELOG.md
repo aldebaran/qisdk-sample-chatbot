@@ -11,7 +11,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 ### changed
 - Now using TopicBuilder
 - DialogflowChatbot no longer needs Robot
-
+- renamed 'Class diagram.plantuml' into 'cclassDiagram.plantuml'
+- Improved README.md
 
 ## [0.0.1] - 2018-05-30
 
