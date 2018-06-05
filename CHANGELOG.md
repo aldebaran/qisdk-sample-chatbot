@@ -13,6 +13,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 - DialogflowChatbot no longer needs Robot
 - renamed 'Class diagram.plantuml' into 'cclassDiagram.plantuml'
 - Improved README.md
+- upgrade to QiSDK 1.3.2
+- MainActivity inherits RobotActivity
 
 ## [0.0.1] - 2018-05-30
 
