@@ -12,7 +12,8 @@ casual discussion.
 
 * The local qichatbot is in charge of a shopping-oriented conversation whose
   description in qiChat language is provided in a .top resource file.
-* The Dialogflow chatbot deals with the small talk.
+* The Dialogflow chatbot deals with the small talk plus several simple
+  rules about wine.
 
 ## Prerequisites
 
@@ -20,9 +21,11 @@ casual discussion.
 
 ## Getting started ##
 
+For the sake of simplicity, this sample uses a **Dialogflow v1 agent**.
+The class DialogflowChatbot.java shows how to interact with such an agent.
+
 ### Creating a Dialogflow agent ###
 
-For the sake of simplicity, this sample uses a **v1** Dialogflow agent.
 In order to run the application, you need to create first your own agent
 via the Dialogflow console (https://console.dialogflow.com).
 
@@ -30,7 +33,9 @@ Ensure you select *V1 API* in the *General* tab of the settings page.
 
 ### Client access token ###
 Once your agent is created, you should make the provided **client access token**
-you are provided available to the project.
+available to the Android project. This token is needed to connect the
+application to the agent.
+
 In the **global gradle.properties** file located in your *~/.gradle* folder,
 add the following line:
 
@@ -39,30 +44,29 @@ CHATBOT_SAMPLE_DIALOGFLOW_TOKEN=your_client_access_token
 ```
 This avoids keeping the token under version control.
 
-### Enabling and customizing small talk ###
+### Populating the agent ###
 
-In the Dialogflow console, go the the "Small talk" page and ensure this
-feature is **enabled**. This will allow your agent to answer to popular
-requests without extra efforts.
+Your Dialogflow agent may be populated either by hand (via the console)
+or by importing an already made agent. Learning how to create Dialogflow
+intents goes beyond the scope of this sample. Therefore we provide you
+with a sample agent description you just have to import in your own agent.
 
-However you may optionally customize several reponses to adapt them to
-Pepper or to your application.
+In the Dialogflow console:
+* Go to the *Settings* page of the agent
+* Choose the *Export and Import* option
+* Click on *Restore from zip*
+* Then follow instructions to upload the [DialogflowChatbotAgent.zip] file.
 
-For example, in the topic "About agent", a possible answer to the question
-*Who are you?* is *I'm Pepper the robot*. As an answer to the question *How
-old are you?*, you may enter *I was born in 2014*.
-
-Of course, only enabling the "small talk" option of your Dialogflow agent
-is the minimal approach. You may also add Intents to your agent, but this
-goes beyond the scope of this sample. See Dialogflow documentation.
+This sample agent provides basic interaction about french wine and
+and some customized small talk.
 
 
 ## Additional resources ##
 
 #### Overview class diagram ####
 A PlantUML [class diagram](classDiagram.plantuml) is available at the root of this project.
-The "PlantUML integration" plugin is needed to display it in AndroidStudio,
-or you can visit http://www.plantuml.com/plantuml too.
+The *PlantUML integration* plugin is needed to display it in AndroidStudio.
+Alternatively you can visit http://www.plantuml.com/plantuml.
 
 ## Licence ##
 

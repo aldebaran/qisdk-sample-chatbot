@@ -28,7 +28,7 @@ public class DialogflowChatbot extends BaseChatbot {
 
     private static final String TAG = "DialogflowChatbot";
     private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
-    private static final String ANIM_ACTION = "dance";
+    private static final String EXCITEMENT_ACTION = "excitement";
 
 
     DialogflowChatbot(final QiContext context) {
@@ -86,7 +86,7 @@ public class DialogflowChatbot extends BaseChatbot {
         }
 
         BaseChatbotReaction reaction = null;
-        if (ANIM_ACTION.equals(action)) {
+        if (EXCITEMENT_ACTION.equals(action)) {
             // An action is provided with the Dialogflow response: then add an animation to our reply
             reaction = new ChatbotUtteredAndAnimatedReaction(getQiContext(), answer, R.raw.nicereaction_a001);
         } else {

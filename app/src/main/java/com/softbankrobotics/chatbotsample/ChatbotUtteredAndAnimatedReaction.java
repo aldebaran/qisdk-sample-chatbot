@@ -43,8 +43,8 @@ public class ChatbotUtteredAndAnimatedReaction extends BaseChatbotReaction {
     @Override
     public void runWith(final SpeechEngine speechEngine) {
 
-        // All Say actions that must be executed during the call of the this method must be created
-        // via the SpeechEngine.
+        // All Say actions that must be executed inside this method must be created
+        // via the provided SpeechEngine.
         Say say = speechEngine.makeSay(new Phrase(toBeSaid));
 
         Animation animation = AnimationBuilder.with(getQiContext())
@@ -54,14 +54,14 @@ public class ChatbotUtteredAndAnimatedReaction extends BaseChatbotReaction {
                                         .withAnimation(animation)
                                         .build();
 
-        // The actions must be executed asynchronously in order to get futures that can be
-        // canceled by the head thanks to the stop() method.
-        // Additionally, here it allows both actions to be executed in parallel.
+        // The actions must be executed asynchronously in order to get futures that allow
+        // the actions to be canceled by the chat engine thanks to the stop() method.
+        // Additionally, the asynchronous call allows here both actions to be executed in parallel.
         fsay = say.async().run();
         fanimate = animate.async().run();
 
         try {
-            // One must not leave runWith before the actions are terminated : thus wait on the futures
+            // One must not leave runWith before the actions are terminated: thus wait on the futures
             fsay.get();
             fanimate.get();
         } catch (ExecutionException e) {

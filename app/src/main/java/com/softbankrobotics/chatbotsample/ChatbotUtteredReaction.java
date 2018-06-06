@@ -35,7 +35,7 @@ public class ChatbotUtteredReaction extends BaseChatbotReaction {
         @Override
         public void runWith(final SpeechEngine speechEngine) {
 
-            // All say actions that must be executed inside this method must be created via the SpeechEngine
+            // All Say actions that must be executed inside this method must be created via the SpeechEngine
             Say say = speechEngine.makeSay(new Phrase(toBeSaid));
 
             try {
