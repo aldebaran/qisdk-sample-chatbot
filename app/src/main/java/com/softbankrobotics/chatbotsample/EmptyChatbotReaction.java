@@ -9,7 +9,7 @@ import com.aldebaran.qi.sdk.object.conversation.BaseChatbotReaction;
 import com.aldebaran.qi.sdk.object.conversation.SpeechEngine;
 
 /**
- * A ChatbotReaction that has does nothing.
+ * A ChatbotReaction that does nothing.
  */
 public class EmptyChatbotReaction extends BaseChatbotReaction {
 

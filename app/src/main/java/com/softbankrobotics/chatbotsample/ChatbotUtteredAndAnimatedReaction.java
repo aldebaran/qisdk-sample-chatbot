@@ -11,10 +11,10 @@ import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.builder.AnimateBuilder;
 import com.aldebaran.qi.sdk.builder.AnimationBuilder;
+import com.aldebaran.qi.sdk.builder.SayBuilder;
 import com.aldebaran.qi.sdk.object.actuation.Animate;
 import com.aldebaran.qi.sdk.object.actuation.Animation;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbotReaction;
-import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.aldebaran.qi.sdk.object.conversation.SpeechEngine;
 
@@ -45,7 +45,10 @@ public class ChatbotUtteredAndAnimatedReaction extends BaseChatbotReaction {
 
         // All Say actions that must be executed inside this method must be created
         // via the provided SpeechEngine.
-        Say say = speechEngine.makeSay(new Phrase(toBeSaid));
+
+        Say say = SayBuilder.with(speechEngine)
+                            .withText(toBeSaid)
+                            .build();
 
         Animation animation = AnimationBuilder.with(getQiContext())
                                               .withResources(animationResourceId)

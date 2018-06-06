@@ -46,13 +46,13 @@ public class DialogflowChatbot extends BaseChatbot {
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
 
         } else {
-            // Ask the DialogFlow agent to answer to the phrase
+            // Ask the online DialogFlow agent to answer to the phrase
             DialogflowAgent dfAgent = DialogflowAgent.getInstance();
             AIResponse aiResponse = dfAgent.answerTo(phrase.getText());
 
             // Return a reply built from the agent's response
             return replyFromAIResponse(aiResponse);
-}
+        }
     }
 
 @Override
@@ -97,6 +97,5 @@ public class DialogflowChatbot extends BaseChatbot {
         // Make the reply and return it
         return new StandardReplyReaction(reaction, replyPriority);
     }
-
 
 }

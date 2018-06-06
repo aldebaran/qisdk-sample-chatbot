@@ -13,11 +13,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 - DialogflowChatbot no longer needs Robot
 - renamed 'Class diagram.plantuml' into 'classDiagram.plantuml'
 - Improved README.md
-- upgrade to QiSDK 1.3.2
+- upgrade to QiSDK 1.3.3
 - MainActivity inherits RobotActivity
-- Renaming the action string into 'excitment'
+- Renaming the action string into 'excitement'
 - Dialogflow agent no longer only in charge of the small talk, explain it in README
 - Providing the Dialogflow agent as a zip file that can be imported
+- Now using SayBuilder.withSpeechEngine()
 
 ## [0.0.1] - 2018-05-30
 
