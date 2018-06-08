@@ -15,9 +15,12 @@ casual discussion.
 * The Dialogflow chatbot deals with the small talk plus several simple
   rules about wine.
 
-## Prerequisites
 
-* NAOqi version: 2.9.0 or greater.
+## Minimum configuration
+
+* Pepper 1.9
+* API Level 3
+
 
 ## Getting started ##
 
