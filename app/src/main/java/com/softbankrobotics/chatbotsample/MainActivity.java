@@ -5,14 +5,14 @@
 package com.softbankrobotics.chatbotsample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import com.aldebaran.qi.sdk.QiSDK;
+import com.aldebaran.qi.sdk.design.activity.RobotActivity;
 
 /**
  * Main activity of the application.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends RobotActivity {
 
     private static final String TAG = "MainActivity";
 

@@ -6,6 +6,7 @@ package com.softbankrobotics.chatbotsample;
 
 import android.util.Log;
 
+import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbot;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbotReaction;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
@@ -27,14 +28,11 @@ public class DialogflowChatbot extends BaseChatbot {
 
     private static final String TAG = "DialogflowChatbot";
     private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
-    private static final String ANIM_ACTION = "dance";
-
-    private Robot robot;
+    private static final String EXCITEMENT_ACTION = "excitement";
 
 
-    DialogflowChatbot(final Robot theRobot) {
-        super(theRobot.getQiContext());
-        robot = theRobot;
+    DialogflowChatbot(final QiContext context) {
+        super(context);
     }
 
 
@@ -44,17 +42,17 @@ public class DialogflowChatbot extends BaseChatbot {
         if (phrase.getText().isEmpty()) {
             // The phrase may be empty when the robot ears something
             // but cannot recognize words. Return an empty reply.
-            EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(robot.getQiContext());
+            EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(getQiContext());
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
 
         } else {
-            // Ask the DialogFlow agent to answer to the phrase
+            // Ask the online DialogFlow agent to answer to the phrase
             DialogflowAgent dfAgent = DialogflowAgent.getInstance();
             AIResponse aiResponse = dfAgent.answerTo(phrase.getText());
 
             // Return a reply built from the agent's response
             return replyFromAIResponse(aiResponse);
-}
+        }
     }
 
 @Override
@@ -88,7 +86,7 @@ public class DialogflowChatbot extends BaseChatbot {
         }
 
         BaseChatbotReaction reaction = null;
-        if (ANIM_ACTION.equals(action)) {
+        if (EXCITEMENT_ACTION.equals(action)) {
             // An action is provided with the Dialogflow response: then add an animation to our reply
             reaction = new ChatbotUtteredAndAnimatedReaction(getQiContext(), answer, R.raw.nicereaction_a001);
         } else {
@@ -99,6 +97,5 @@ public class DialogflowChatbot extends BaseChatbot {
         // Make the reply and return it
         return new StandardReplyReaction(reaction, replyPriority);
     }
-
 
 }

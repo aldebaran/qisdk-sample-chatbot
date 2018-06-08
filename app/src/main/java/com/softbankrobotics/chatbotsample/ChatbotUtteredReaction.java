@@ -8,8 +8,8 @@ import android.util.Log;
 
 import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
+import com.aldebaran.qi.sdk.builder.SayBuilder;
 import com.aldebaran.qi.sdk.object.conversation.BaseChatbotReaction;
-import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.Say;
 import com.aldebaran.qi.sdk.object.conversation.SpeechEngine;
 
@@ -35,8 +35,10 @@ public class ChatbotUtteredReaction extends BaseChatbotReaction {
         @Override
         public void runWith(final SpeechEngine speechEngine) {
 
-            // All say actions that must be executed inside this method must be created via the SpeechEngine
-            Say say = speechEngine.makeSay(new Phrase(toBeSaid));
+            // All Say actions that must be executed inside this method must be created via the SpeechEngine
+            Say say = SayBuilder.with(speechEngine)
+                                .withText(toBeSaid)
+                                .build();
 
             try {
                 // The say action must be executed asynchronously in order to get

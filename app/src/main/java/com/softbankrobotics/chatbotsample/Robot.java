@@ -10,6 +10,7 @@ import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
+import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.object.context.RobotContext;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.Chatbot;
@@ -17,19 +18,18 @@ import com.aldebaran.qi.sdk.object.conversation.Conversation;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
-import com.aldebaran.qi.sdk.util.IOUtils;
 
 /**
  * Class that gathers main robot-related operations of our application.
  */
 public class Robot implements RobotLifecycleCallbacks {
 
-    private static final String TAG = "RobotImpl";
+    private static final String TAG = "Robot";
 
     private QiContext qiContext;
 
 
-    QiContext getQiContext() {
+    private QiContext getQiContext() {
         return qiContext;
     }
 
@@ -67,7 +67,7 @@ public class Robot implements RobotLifecycleCallbacks {
 
         // Create chatbots
         Chatbot qichatbot = createQiChatbot();
-        Chatbot dialogFlowChatbot = new DialogflowChatbot(this);
+        Chatbot dialogFlowChatbot = new DialogflowChatbot(getQiContext());
 
         // Create the chat from its chatbots
         Chat chat = ChatBuilder.with(getQiContext())
@@ -83,8 +83,9 @@ public class Robot implements RobotLifecycleCallbacks {
     private QiChatbot createQiChatbot() {
 
         // Create a topic
-        String topicContent = IOUtils.fromRaw(getQiContext(), R.raw.shop);
-        Topic topic = getConversation().makeTopic(topicContent);
+        Topic topic = TopicBuilder.with(getQiContext())
+                                  .withResource(R.raw.shop)
+                                  .build();
 
         // Create the QiChatbot from a topic
         return QiChatbotBuilder.with(getQiContext())
