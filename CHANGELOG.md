@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 
 [Unreleased]
 
+## [0.0.3] - 2018-06-06
+
+### added
+- New plantUML sequence diagram
+
+### changed
+- Adding a "not understood" rule to the topic file
+
+
 ## [0.0.2] - 2018-06-06
 
 ### changed
