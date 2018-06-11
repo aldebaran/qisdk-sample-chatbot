@@ -66,9 +66,12 @@ and some customized small talk.
 
 ## Additional resources ##
 
-#### Overview class diagram ####
-A PlantUML [class diagram](classDiagram.plantuml) is available at the root of this project.
-The *PlantUML integration* plugin is needed to display it in AndroidStudio.
+#### Overview UML diagrams ####
+A PlantUML [class diagram](classDiagram.plantuml) and a
+[sequence diagram](sequenceDiagram.plantuml)
+are available at the root of this project.
+
+The *PlantUML integration* plugin is needed to display them in AndroidStudio.
 Alternatively you can visit http://www.plantuml.com/plantuml.
 
 ## Licence ##

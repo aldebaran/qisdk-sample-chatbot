@@ -6,3 +6,4 @@ u: (~buy) Do you want to buy wine or beer ?
     u1: (wine) Let me show you my wines. ^endDiscuss(wine)
     u1: (beer) Let me show you my beers. ^endDiscuss(beers)
     u1: (_*) i can't answer for $1 . Do you want to buy wine or beer ? ^stayInScope
+u: (e:Dialog/NotUnderstood) I did not understand.
