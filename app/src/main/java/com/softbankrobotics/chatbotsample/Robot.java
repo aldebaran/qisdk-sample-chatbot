@@ -11,10 +11,8 @@ import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
 import com.aldebaran.qi.sdk.builder.ChatBuilder;
 import com.aldebaran.qi.sdk.builder.QiChatbotBuilder;
 import com.aldebaran.qi.sdk.builder.TopicBuilder;
-import com.aldebaran.qi.sdk.object.context.RobotContext;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.Chatbot;
-import com.aldebaran.qi.sdk.object.conversation.Conversation;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
@@ -27,11 +25,6 @@ public class Robot implements RobotLifecycleCallbacks {
     private static final String TAG = "Robot";
 
     private QiContext qiContext;
-
-
-    private QiContext getQiContext() {
-        return qiContext;
-    }
 
     @Override
     public void onRobotFocusGained(final QiContext theContext) {
@@ -53,24 +46,15 @@ public class Robot implements RobotLifecycleCallbacks {
         Log.e(TAG, "Robot is not available: " + reason);
     }
 
-    private Conversation getConversation() {
-        return getQiContext().getConversation();
-    }
-
-    private RobotContext getRobotContext() {
-        return getQiContext().getRobotContext();
-    }
-
-
     private void runChat() {
         Log.d(TAG, "runChat()");
 
         // Create chatbots
         Chatbot qichatbot = createQiChatbot();
-        Chatbot dialogFlowChatbot = new DialogflowChatbot(getQiContext());
+        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext);
 
         // Create the chat from its chatbots
-        Chat chat = ChatBuilder.with(getQiContext())
+        Chat chat = ChatBuilder.with(qiContext)
                                .withChatbot(qichatbot)
                                .withChatbot(dialogFlowChatbot)
                                .build();
@@ -83,12 +67,12 @@ public class Robot implements RobotLifecycleCallbacks {
     private QiChatbot createQiChatbot() {
 
         // Create a topic
-        Topic topic = TopicBuilder.with(getQiContext())
+        Topic topic = TopicBuilder.with(qiContext)
                                   .withResource(R.raw.shop)
                                   .build();
 
         // Create the QiChatbot from a topic
-        return QiChatbotBuilder.with(getQiContext())
+        return QiChatbotBuilder.with(qiContext)
                                .withTopic(topic)
                                .build();
     }
@@ -151,5 +135,4 @@ public class Robot implements RobotLifecycleCallbacks {
             }
         });
     }
-
 }

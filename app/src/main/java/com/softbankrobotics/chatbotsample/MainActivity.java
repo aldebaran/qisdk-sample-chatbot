@@ -14,8 +14,6 @@ import com.aldebaran.qi.sdk.design.activity.RobotActivity;
  */
 public class MainActivity extends RobotActivity {
 
-    private static final String TAG = "MainActivity";
-
     Robot robot = new Robot();
 
     @Override
@@ -23,7 +21,7 @@ public class MainActivity extends RobotActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // In this sample, instead of implementing robotlicycle callbacks in the main activity,
+        // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
 
         QiSDK.register(this, robot);
@@ -34,5 +32,4 @@ public class MainActivity extends RobotActivity {
         QiSDK.unregister(this, robot);
         super.onDestroy();
     }
-
 }
