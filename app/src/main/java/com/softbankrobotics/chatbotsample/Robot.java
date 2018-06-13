@@ -24,6 +24,7 @@ public class Robot implements RobotLifecycleCallbacks {
 
     private static final String TAG = "Robot";
 
+    private Chat chat;
     private QiContext qiContext;
 
     @Override
@@ -39,6 +40,8 @@ public class Robot implements RobotLifecycleCallbacks {
     public void onRobotFocusLost() {
         Log.d(TAG, "onRobotFocusLost");
         this.qiContext = null;
+
+        removeChatListeners();
     }
 
     @Override
@@ -54,12 +57,11 @@ public class Robot implements RobotLifecycleCallbacks {
         Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext);
 
         // Create the chat from its chatbots
-        Chat chat = ChatBuilder.with(qiContext)
-                               .withChatbot(qichatbot)
-                               .withChatbot(dialogFlowChatbot)
+        chat = ChatBuilder.with(qiContext)
+                               .withChatbot(qichatbot, dialogFlowChatbot)
                                .build();
 
-        setChatListeners(chat);
+        setChatListeners();
 
         chat.async().run();
     }
@@ -77,8 +79,7 @@ public class Robot implements RobotLifecycleCallbacks {
                                .build();
     }
 
-    private void setChatListeners(final Chat chat) {
-
+    private void setChatListeners() {
         chat.addOnStartedListener(new Chat.OnStartedListener() {
             @Override
             public void onStarted() {
@@ -134,5 +135,20 @@ public class Robot implements RobotLifecycleCallbacks {
                 Log.i(TAG, "chat.onNoReplyFoundFor() input.getText() = " + input.getText());
             }
         });
+    }
+
+    private void removeChatListeners() {
+        if (chat == null) {
+            return;
+        }
+
+        chat.removeAllOnStartedListeners();
+        chat.removeAllOnListeningChangedListeners();
+        chat.removeAllOnSayingChangedListeners();
+        chat.removeAllOnHeardListeners();
+        chat.removeAllOnNoPhraseRecognizedListeners();
+        chat.removeAllOnNormalReplyFoundForListeners();
+        chat.removeAllOnFallbackReplyFoundForListeners();
+        chat.removeAllOnNoReplyFoundForListeners();
     }
 }
