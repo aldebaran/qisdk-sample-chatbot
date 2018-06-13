@@ -58,8 +58,8 @@ public class Robot implements RobotLifecycleCallbacks {
 
         // Create the chat from its chatbots
         chat = ChatBuilder.with(qiContext)
-                               .withChatbot(qichatbot, dialogFlowChatbot)
-                               .build();
+                          .withChatbot(qichatbot, dialogFlowChatbot)
+                          .build();
 
         setChatListeners();
 
