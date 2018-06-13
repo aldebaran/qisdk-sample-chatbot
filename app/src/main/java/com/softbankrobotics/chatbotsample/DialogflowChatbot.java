@@ -30,11 +30,9 @@ public class DialogflowChatbot extends BaseChatbot {
     private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
     private static final String EXCITEMENT_ACTION = "excitement";
 
-
     DialogflowChatbot(final QiContext context) {
         super(context);
     }
-
 
     @Override
     public StandardReplyReaction replyTo(final Phrase phrase, final Locale locale) {
@@ -44,7 +42,6 @@ public class DialogflowChatbot extends BaseChatbot {
             // but cannot recognize words. Return an empty reply.
             EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(getQiContext());
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
-
         } else {
             // Ask the online DialogFlow agent to answer to the phrase
             DialogflowAgent dfAgent = DialogflowAgent.getInstance();
@@ -55,7 +52,7 @@ public class DialogflowChatbot extends BaseChatbot {
         }
     }
 
-@Override
+    @Override
     public void acknowledgeHeard(final Phrase phrase, final Locale locale) {
         Log.i(TAG, "The robot heard: "+ phrase.getText());
     }
@@ -97,5 +94,4 @@ public class DialogflowChatbot extends BaseChatbot {
         // Make the reply and return it
         return new StandardReplyReaction(reaction, replyPriority);
     }
-
 }

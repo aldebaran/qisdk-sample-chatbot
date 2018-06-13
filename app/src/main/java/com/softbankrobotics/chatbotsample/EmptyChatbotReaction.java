@@ -13,18 +13,17 @@ import com.aldebaran.qi.sdk.object.conversation.SpeechEngine;
  */
 public class EmptyChatbotReaction extends BaseChatbotReaction {
 
-    private static final String TAG = "EmptyChatbotReaction";
-
     EmptyChatbotReaction(final QiContext context) {
         super(context);
     }
 
     @Override
     public void runWith(final SpeechEngine speechEngine) {
+        // Not used.
     }
 
     @Override
     public void stop() {
+        // Not used.
     }
-
 }

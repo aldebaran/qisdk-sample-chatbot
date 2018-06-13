@@ -43,12 +43,14 @@ public class RequestTask extends AsyncTask<AIRequest, Void, AIResponse> {
         if (request == null) {
             throw new NullPointerException("No request provided");
         }
+
         AIResponse result = null;
         try {
             result = aiDataService.request(request);
         } catch (AIServiceException e) {
             Log.e(TAG, "aiDataService request error", e);
         }
+
         // By setting the promise we unlock any waiting call on answerTo()
         responsePromise.setValue(result);
         return result;

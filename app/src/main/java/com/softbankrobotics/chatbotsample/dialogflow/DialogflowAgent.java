@@ -87,6 +87,7 @@ public final class DialogflowAgent {
             Log.d(TAG, "Intent id: " + metadata.getIntentId());
             Log.d(TAG, "Intent name: " + metadata.getIntentName());
         }
+
         final HashMap<String, JsonElement> params = result.getParameters();
         if (params != null && !params.isEmpty()) {
             Log.d(TAG, "Parameters: ");
