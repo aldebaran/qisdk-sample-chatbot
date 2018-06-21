@@ -4,6 +4,7 @@
  */
 package com.softbankrobotics.chatbotsample;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.aldebaran.qi.sdk.QiContext;
@@ -29,9 +30,11 @@ public class DialogflowChatbot extends BaseChatbot {
     private static final String TAG = "DialogflowChatbot";
     private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
     private static final String EXCITEMENT_ACTION = "excitement";
+    private final UiNotifier uiNotifier;
 
-    DialogflowChatbot(final QiContext context) {
+    DialogflowChatbot(final QiContext context, UiNotifier uiNotifier) {
         super(context);
+        this.uiNotifier = uiNotifier;
     }
 
     @Override
@@ -43,10 +46,10 @@ public class DialogflowChatbot extends BaseChatbot {
             EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(getQiContext());
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
         } else {
+
             // Ask the online DialogFlow agent to answer to the phrase
             DialogflowAgent dfAgent = DialogflowAgent.getInstance();
             AIResponse aiResponse = dfAgent.answerTo(phrase.getText());
-
             // Return a reply built from the agent's response
             return replyFromAIResponse(aiResponse);
         }
@@ -59,6 +62,7 @@ public class DialogflowChatbot extends BaseChatbot {
 
     @Override
     public void acknowledgeSaid(final Phrase phrase, final Locale locale) {
+        uiNotifier.setText(phrase.getText());
         Log.i(TAG, "The robot uttered this reply, provided by another chatbot: "+ phrase.getText());
     }
 
@@ -66,7 +70,7 @@ public class DialogflowChatbot extends BaseChatbot {
      * Build a reply that can be processed by our chatbot, based on the response from Dialogflow
      */
     private StandardReplyReaction replyFromAIResponse(final AIResponse response) {
-
+        uiNotifier.colorDialogFlow();
         Log.d(TAG, "replyFromAIResponse");
 
         // Extract relevant data from Dialogflow response

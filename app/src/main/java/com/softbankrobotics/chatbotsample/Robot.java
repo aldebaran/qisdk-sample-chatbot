@@ -4,6 +4,7 @@
  */
 package com.softbankrobotics.chatbotsample;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.aldebaran.qi.sdk.QiContext;
@@ -26,6 +27,11 @@ public class Robot implements RobotLifecycleCallbacks {
 
     private Chat chat;
     private QiContext qiContext;
+    private UiNotifier uiNotifier;
+
+    public Robot(UiNotifier uiNotifier) {
+        this.uiNotifier = uiNotifier;
+    }
 
     @Override
     public void onRobotFocusGained(final QiContext theContext) {
@@ -54,7 +60,7 @@ public class Robot implements RobotLifecycleCallbacks {
 
         // Create chatbots
         Chatbot qichatbot = createQiChatbot();
-        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext);
+        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext,uiNotifier);
 
         // Create the chat from its chatbots
         chat = ChatBuilder.with(qiContext)
@@ -97,6 +103,7 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnSayingChangedListener(new Chat.OnSayingChangedListener() {
             @Override
             public void onSayingChanged(final Phrase phrase) {
+                uiNotifier.setText(phrase.getText());
                 Log.i(TAG, "chat.onSayingChanged(): " + phrase.getText());
             }
         });
@@ -118,6 +125,7 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnNormalReplyFoundForListener(new Chat.OnNormalReplyFoundForListener() {
             @Override
             public void onNormalReplyFoundFor(final Phrase input) {
+                uiNotifier.colorQiChatBot();
                 Log.i(TAG, "chat.onNormalReplyFoundFor() phrase.getText() = " + input.getText());
             }
         });
