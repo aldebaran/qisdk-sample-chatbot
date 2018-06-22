@@ -18,6 +18,8 @@ import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
 
+import java.util.List;
+
 /**
  * Class that gathers main robot-related operations of our application.
  */
@@ -25,9 +27,12 @@ public class Robot implements RobotLifecycleCallbacks {
 
     private static final String TAG = "Robot";
 
+    public static final int MAX_RECOMMENDATION = 10;
+
     private Chat chat;
     private QiContext qiContext;
     private UiNotifier uiNotifier;
+    private QiChatbot qichatbot;
 
     public Robot(UiNotifier uiNotifier) {
         this.uiNotifier = uiNotifier;
@@ -59,7 +64,7 @@ public class Robot implements RobotLifecycleCallbacks {
         Log.d(TAG, "runChat()");
 
         // Create chatbots
-        Chatbot qichatbot = createQiChatbot();
+        qichatbot = createQiChatbot();
         Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext,uiNotifier);
 
         // Create the chat from its chatbots
@@ -68,8 +73,9 @@ public class Robot implements RobotLifecycleCallbacks {
                           .build();
 
         setChatListeners();
-
         chat.async().run();
+        uiNotifier.updateQiChatRecommendation(qichatbot.globalRecommendations(MAX_RECOMMENDATION));
+        Log.i(TAG, "globalRecommendations: " + qichatbot.globalRecommendations(MAX_RECOMMENDATION).toString());
     }
 
     private QiChatbot createQiChatbot() {
@@ -89,6 +95,7 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnStartedListener(new Chat.OnStartedListener() {
             @Override
             public void onStarted() {
+                uiNotifier.updateQiChatRecommendation(qichatbot.scopeRecommendations(MAX_RECOMMENDATION));
                 Log.i(TAG, "chat.onStarted()");
             }
         });
@@ -104,6 +111,8 @@ public class Robot implements RobotLifecycleCallbacks {
             @Override
             public void onSayingChanged(final Phrase phrase) {
                 uiNotifier.setText(phrase.getText());
+                uiNotifier.updateQiChatRecommendation(qichatbot.scopeRecommendations(MAX_RECOMMENDATION));
+                Log.i(TAG, "scopeRecommendations: " + qichatbot.scopeRecommendations(MAX_RECOMMENDATION).toString());
                 Log.i(TAG, "chat.onSayingChanged(): " + phrase.getText());
             }
         });
