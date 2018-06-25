@@ -36,10 +36,10 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dialogFlowContainer = findViewById(R.id.dialogFlowContainer);
+     /*   dialogFlowContainer = findViewById(R.id.dialogFlowContainer);
         qiChatBotContainer = findViewById(R.id.qiChatBotContainer);
         dialogTxt = findViewById(R.id.tv);
-        qiChatSuggestion = findViewById(R.id.qiChatSuggest);
+        qiChatSuggestion = findViewById(R.id.qiChatSuggest);*/
         // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
@@ -96,7 +96,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     protected void onResume() {
         super.onResume();
 
-        qiChatSuggestion.setVisibility(View.VISIBLE);
+//        qiChatSuggestion.setVisibility(View.VISIBLE);
     }
 
 

@@ -15,4 +15,13 @@
         <item name="android:textColor">@color/button_text_color_selector</item>
         <item name="android:tint">@color/button_text_color_selector</item>
     </style>
+    <style name="suggestionStyle">
+        <item name="android:background">@drawable/suggestion_background</item>
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+
 </resources>
