@@ -95,7 +95,6 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnStartedListener(new Chat.OnStartedListener() {
             @Override
             public void onStarted() {
-                uiNotifier.updateQiChatRecommendation(qichatbot.scopeRecommendations(MAX_RECOMMENDATION));
                 Log.i(TAG, "chat.onStarted()");
             }
         });
@@ -111,7 +110,6 @@ public class Robot implements RobotLifecycleCallbacks {
             @Override
             public void onSayingChanged(final Phrase phrase) {
                 uiNotifier.setText(phrase.getText());
-                uiNotifier.updateQiChatRecommendation(qichatbot.scopeRecommendations(MAX_RECOMMENDATION));
                 Log.i(TAG, "scopeRecommendations: " + qichatbot.scopeRecommendations(MAX_RECOMMENDATION).toString());
                 Log.i(TAG, "chat.onSayingChanged(): " + phrase.getText());
             }

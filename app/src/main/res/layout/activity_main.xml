@@ -42,12 +42,15 @@
         android:id="@+id/dialogFlowContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/background_second_color_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/qiChatBotContainer"
-        app:layout_constraintTop_toBottomOf="@+id/tv" >
+        app:layout_constraintTop_toBottomOf="@+id/tv">
 
         <TextView
             android:id="@+id/textView5"
@@ -66,13 +69,16 @@
         android:id="@+id/qiChatBotContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/background_primary_color_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/dialogFlowContainer"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv"
-        app:layout_constraintVertical_bias="0.0" >
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/textView4"

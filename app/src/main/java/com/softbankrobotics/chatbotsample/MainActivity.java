@@ -7,10 +7,7 @@ package com.softbankrobotics.chatbotsample;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.aldebaran.qi.sdk.QiSDK;
@@ -33,9 +30,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private TextView dialogTxt;
     private TextView qiChatSuggestion;
     private boolean isDialogFlow = false;
-
-    private final AlphaAnimation fadeOutAnimation = new AlphaAnimation(1.0f, 0.0f);
-    private final AlphaAnimation fadeInAnimation = new AlphaAnimation(0.0f, 1.0f);
     private List<Phrase> qiChatRecommendation = new ArrayList<>();
 
     @Override
@@ -50,6 +44,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
         QiSDK.register(this, robot);
+
     }
 
     @Override
@@ -64,8 +59,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dialogFlowContainer.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
-                qiChatBotContainer.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary));
+                dialogFlowContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_green_radius));
+                qiChatBotContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_primary_color_radius));
             }
         });
     }
@@ -76,8 +71,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    qiChatBotContainer.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.green));
-                    dialogFlowContainer.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.colorAccent));
+                    qiChatBotContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_green_radius));
+                    dialogFlowContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_second_color_radius));
                 }
             });
         }
@@ -102,66 +97,14 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         super.onResume();
 
         qiChatSuggestion.setVisibility(View.VISIBLE);
-        startAutoCommandUpdate();
     }
 
-    private void startAutoCommandUpdate() {
-        fadeOutAnimation.setStartOffset(3000);
-        fadeOutAnimation.setDuration(3000);
-        fadeOutAnimation.setAnimationListener(fadeOutAnimationListener);
-        fadeInAnimation.setStartOffset(1000);
-        fadeInAnimation.setDuration(3000);
-        fadeInAnimation.setAnimationListener(fadeInAnimationListener);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                qiChatSuggestion.startAnimation(fadeInAnimation);
-            }
-        });
-    }
-
-
-    Animation.AnimationListener fadeInAnimationListener = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            qiChatSuggestion.setAlpha(1.0f);
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            qiChatSuggestion.startAnimation(fadeOutAnimation);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            // nothing here
-        }
-    };
-
-    Animation.AnimationListener fadeOutAnimationListener = new Animation.AnimationListener() {
-        @Override
-        public void onAnimationStart(Animation animation) {
-            // nothing here
-        }
-
-        @Override
-        public void onAnimationEnd(Animation animation) {
-            updateCommandUI();
-            qiChatSuggestion.setAlpha(0.0f);
-            qiChatSuggestion.startAnimation(fadeInAnimation);
-        }
-
-        @Override
-        public void onAnimationRepeat(Animation animation) {
-            // nothing here
-        }
-    };
 
     private void updateCommandUI() {
-        if(qiChatRecommendation.size()==0){
+        if (qiChatRecommendation.isEmpty()) {
             return;
         }
-        final int randomNum = ThreadLocalRandom.current().nextInt(0, qiChatRecommendation.size() );
+        final int randomNum = ThreadLocalRandom.current().nextInt(0, qiChatRecommendation.size());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -172,6 +115,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
 
     @Override
     public void updateQiChatRecommendation(List<Phrase> recommendation) {
-        this.qiChatRecommendation = recommendation ;
+        this.qiChatRecommendation = recommendation;
+
     }
 }

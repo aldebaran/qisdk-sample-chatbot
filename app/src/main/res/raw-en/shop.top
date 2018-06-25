@@ -1,12 +1,13 @@
 topic: ~shop()
 
 concept:(buy) [buy purchase]
-concept:(joke) [I can tell you a joke]
+concept:(joke) ["{I can tell you a} joke"]
+concept:(daily) ["{when is} daily"]
 
 u: (~buy) Do you want to buy wine or beer ?
-    u1: (wine) Let me show you my wines. ^endDiscuss(wine)
-    u1: (beer) Let me show you my beers. ^endDiscuss(beers)
-    u1: (_*) i can't answer for $1 . Do you want to buy wine or beer ? ^stayInScope
+
 u: (~joke) Do you wanna hear a joke ?
+
+u: (~daily) Daily is always at 11 ?
 
 u: (e:Dialog/NotUnderstood) I did not understand.
