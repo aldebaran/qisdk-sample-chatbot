@@ -5,7 +5,9 @@
 package com.softbankrobotics.chatbotsample;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -67,6 +69,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             public void run() {
                 qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                 dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
+                pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
             }
         });
     }
@@ -79,6 +82,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 public void run() {
                     qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
                     dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                    pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
                 }
             });
         }
@@ -91,10 +95,31 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    pepperTxt.setText(text);
+                    if(!TextUtils.isEmpty(text)){
+                        pepperTxt.setText(text);
+                        resetLayout(text);
+                    }
                 }
             });
         }
+
+    }
+
+    private void resetLayout(final String text) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(pepperTxt.getText().toString().equals(text)){
+                    pepperTxt.setText("");
+                    dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                    qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                    pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_background));
+                }else {
+                    handler.postDelayed(this,3000);
+                }
+            }
+        }, 3000);
 
     }
 
