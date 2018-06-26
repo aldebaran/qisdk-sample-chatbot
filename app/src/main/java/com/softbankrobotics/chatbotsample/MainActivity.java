@@ -14,11 +14,6 @@ import android.widget.TextView;
 
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
-import com.aldebaran.qi.sdk.object.conversation.Phrase;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Main activity of the application.
@@ -30,9 +25,14 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private TextView qiChatBotIcon;
     private TextView dialogFlowIcon;
     private TextView pepperTxt;
+    private TextView suggestion1;
+    private TextView suggestion2;
+    private TextView suggestion3;
+    private TextView suggestion4;
     private boolean isDialogFlow = false;
     private Group robotViewGroup;
-    private List<Phrase> qiChatRecommendation = new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -42,6 +42,11 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         qiChatBotIcon = findViewById(R.id.qiChatBot);
         pepperTxt = findViewById(R.id.pepperTxt);
         robotViewGroup = findViewById(R.id.robotViewGroup);
+        suggestion1 = findViewById(R.id.suggestion1);
+        suggestion2 = findViewById(R.id.suggestion2);
+        suggestion3 = findViewById(R.id.suggestion3);
+        suggestion4 = findViewById(R.id.suggestion4);
+        fillSuggestion();
         findViewById(R.id.btn_exit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +54,28 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 System.exit(0);
             }
         });
+        findViewById(R.id.resetSuggestions).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fillSuggestion();
+            }
+        });
         // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
         QiSDK.register(this, robot);
 
+    }
+
+    private void fillSuggestion() {
+
+        int[] towRandomIntQi = Recommendation.getInstance().get2RandomInt(Recommendation.getInstance().getQiRecommendation().size());
+        int[] towRandomIntFlow = Recommendation.getInstance().get2RandomInt(Recommendation.getInstance().getDialogFlowRecommendation().size());
+
+        suggestion1.setText(Recommendation.getInstance().getQiRecommendation().get(towRandomIntQi[0]));
+        suggestion2.setText(Recommendation.getInstance().getQiRecommendation().get(towRandomIntQi[1]));
+        suggestion3.setText(Recommendation.getInstance().getDialogFlowRecommendation().get(towRandomIntFlow[0]));
+        suggestion4.setText(Recommendation.getInstance().getDialogFlowRecommendation().get(towRandomIntFlow[1]));
     }
 
     @Override
@@ -116,37 +138,17 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                     qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                     pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_background));
                 }else {
-                    handler.postDelayed(this,3000);
+                    handler.postDelayed(this,5000);
                 }
             }
-        }, 3000);
+        }, 5000);
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-//        qiChatSuggestion.setVisibility(View.VISIBLE);
     }
 
 
-    private void updateCommandUI() {
-        if (qiChatRecommendation.isEmpty()) {
-            return;
-        }
-        final int randomNum = ThreadLocalRandom.current().nextInt(0, qiChatRecommendation.size());
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                //qiChatSuggestion.setText(qiChatRecommendation.get(randomNum).getText());
-            }
-        });
-    }
-
-    @Override
-    public void updateQiChatRecommendation(List<Phrase> recommendation) {
-        this.qiChatRecommendation = recommendation;
-
-    }
 }

@@ -74,8 +74,6 @@ public class Robot implements RobotLifecycleCallbacks {
 
         setChatListeners();
         chat.async().run();
-        uiNotifier.updateQiChatRecommendation(qichatbot.globalRecommendations(MAX_RECOMMENDATION));
-        Log.i(TAG, "globalRecommendations: " + qichatbot.globalRecommendations(MAX_RECOMMENDATION).toString());
     }
 
     private QiChatbot createQiChatbot() {
@@ -110,7 +108,6 @@ public class Robot implements RobotLifecycleCallbacks {
             @Override
             public void onSayingChanged(final Phrase phrase) {
                 uiNotifier.setText(phrase.getText());
-                Log.i(TAG, "scopeRecommendations: " + qichatbot.scopeRecommendations(MAX_RECOMMENDATION).toString());
                 Log.i(TAG, "chat.onSayingChanged(): " + phrase.getText());
             }
         });

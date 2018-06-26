@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_exit">
 
         <TextView
-            android:id="@+id/suggestion3"
+            android:id="@+id/suggestion4"
             style="@style/suggestionStyle"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
@@ -56,7 +56,7 @@
             tools:text="TextView" />
 
         <TextView
-            android:id="@+id/suggestion4"
+            android:id="@+id/suggestion3"
             style="@style/suggestionStyle"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
@@ -104,7 +104,7 @@
             tools:text="TextView" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/floatingActionButton"
+            android:id="@+id/resetSuggestions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -115,7 +115,7 @@
             android:focusable="true"
             app:backgroundTint="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/suggestion3"
+            app:layout_constraintEnd_toStartOf="@+id/suggestion4"
             app:layout_constraintStart_toEndOf="@+id/suggestion1"
             app:layout_constraintTop_toBottomOf="@+id/imageView"
             app:srcCompat="@drawable/ic_refresh_black_24dp" />
@@ -155,7 +155,6 @@
         <TextView
             android:id="@+id/pepperTxt"
             style="@style/pepperTalkStyle"
-            android:text="TextView"
             app:layout_constraintBottom_toBottomOf="@+id/imageView2"
             app:layout_constraintStart_toEndOf="@+id/line"
             app:layout_constraintTop_toTopOf="@+id/imageView2" />
