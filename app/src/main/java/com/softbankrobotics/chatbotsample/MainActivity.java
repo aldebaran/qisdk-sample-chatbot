@@ -6,6 +6,7 @@ package com.softbankrobotics.chatbotsample;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,6 +31,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private TextView dialogFlowIcon;
     private TextView pepperTxt;
     private boolean isDialogFlow = false;
+    private Group robotViewGroup;
     private List<Phrase> qiChatRecommendation = new ArrayList<>();
 
     @Override
@@ -39,7 +41,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         dialogFlowIcon = findViewById(R.id.dialogFlow);
         qiChatBotIcon = findViewById(R.id.qiChatBot);
         pepperTxt = findViewById(R.id.pepperTxt);
-
+        robotViewGroup = findViewById(R.id.robotViewGroup);
         findViewById(R.id.btn_exit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +49,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 System.exit(0);
             }
         });
-
         // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
@@ -91,17 +92,16 @@ public class MainActivity extends RobotActivity implements UiNotifier {
 
     @Override
     public void setText(final String text) {
-        if (!isDialogFlow) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if(!TextUtils.isEmpty(text)){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                robotViewGroup.setVisibility(View.VISIBLE);
+                if (!isDialogFlow && !TextUtils.isEmpty(text)) {
                         pepperTxt.setText(text);
                         resetLayout(text);
-                    }
                 }
-            });
-        }
+            }
+        });
 
     }
 
