@@ -5,7 +5,6 @@
 package com.softbankrobotics.chatbotsample;
 
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.TextView;
@@ -25,10 +24,9 @@ public class MainActivity extends RobotActivity implements UiNotifier {
 
     Robot robot;
 
-    private ConstraintLayout qiChatBotContainer;
-    private ConstraintLayout dialogFlowContainer;
-    private TextView dialogTxt;
-    private TextView qiChatSuggestion;
+    private TextView qiChatBotIcon;
+    private TextView dialogFlowIcon;
+    private TextView pepperTxt;
     private boolean isDialogFlow = false;
     private List<Phrase> qiChatRecommendation = new ArrayList<>();
 
@@ -36,10 +34,18 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-     /*   dialogFlowContainer = findViewById(R.id.dialogFlowContainer);
-        qiChatBotContainer = findViewById(R.id.qiChatBotContainer);
-        dialogTxt = findViewById(R.id.tv);
-        qiChatSuggestion = findViewById(R.id.qiChatSuggest);*/
+        dialogFlowIcon = findViewById(R.id.dialogFlow);
+        qiChatBotIcon = findViewById(R.id.qiChatBot);
+        pepperTxt = findViewById(R.id.pepperTxt);
+
+        findViewById(R.id.btn_exit).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
+
         // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
@@ -59,8 +65,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                dialogFlowContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_green_radius));
-                qiChatBotContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_primary_color_radius));
+                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
             }
         });
     }
@@ -71,8 +77,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    qiChatBotContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_green_radius));
-                    dialogFlowContainer.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.background_second_color_radius));
+                    qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
+                    dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                 }
             });
         }
@@ -85,7 +91,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    dialogTxt.setText(text);
+                    pepperTxt.setText(text);
                 }
             });
         }
@@ -108,7 +114,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                qiChatSuggestion.setText(qiChatRecommendation.get(randomNum).getText());
+                //qiChatSuggestion.setText(qiChatRecommendation.get(randomNum).getText());
             }
         });
     }
