@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">ChatbotSample</string>
+    <string name="qichatbot">QiChatBot</string>
+    <string name="dialog_flow">Dialog Flow</string>
 
 
     <!-- Globals -->
