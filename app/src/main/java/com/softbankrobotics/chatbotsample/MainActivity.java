@@ -92,9 +92,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         super.onDestroy();
     }
 
-    @Override
     public void colorDialogFlow() {
-        this.isDialogFlow = true;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -105,9 +103,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         });
     }
 
-    @Override
     public void colorQiChatBot() {
-        if (!isDialogFlow) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -116,8 +112,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                     pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
                 }
             });
-        }
-        isDialogFlow = false;
     }
 
     @Override
@@ -126,13 +120,24 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             @Override
             public void run() {
                 robotViewGroup.setVisibility(View.VISIBLE);
-                if (!isDialogFlow && !TextUtils.isEmpty(text)) {
+                if (!TextUtils.isEmpty(text)) {
                     pepperTxt.setText(text);
+                    if (isDialogFlow) {
+                        colorDialogFlow();
+                        isDialogFlow = false;
+                    } else {
+                        colorQiChatBot();
+                    }
                 }
                 resetLayout(text);
             }
         });
 
+    }
+
+    @Override
+    public void isDialogFlow(boolean dialogFlow) {
+        isDialogFlow = dialogFlow;
     }
 
     private void resetLayout(final String text) {

@@ -127,7 +127,6 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnNormalReplyFoundForListener(new Chat.OnNormalReplyFoundForListener() {
             @Override
             public void onNormalReplyFoundFor(final Phrase input) {
-                uiNotifier.colorQiChatBot();
                 Log.i(TAG, "chat.onNormalReplyFoundFor() phrase.getText() = " + input.getText());
             }
         });
