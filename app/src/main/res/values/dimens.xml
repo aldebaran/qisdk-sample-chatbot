@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="big_text">24sp</dimen>
+    <dimen name="button_stoke_width">2dp</dimen>
+    <dimen name="button_corner_radius">7dp</dimen>
+    <dimen name="button_padding">10dp</dimen>
+</resources>
