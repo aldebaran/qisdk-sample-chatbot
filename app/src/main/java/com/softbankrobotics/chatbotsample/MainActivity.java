@@ -136,7 +136,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     private void resetLayout(final String text) {
-        if (!TextUtils.isEmpty(text)) {
+        if (TextUtils.isEmpty(text) && TextUtils.isEmpty(pepperTxt.getText())) {
             return;
         }
         final Handler handler = new Handler();
