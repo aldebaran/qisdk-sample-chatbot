@@ -40,7 +40,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private Group robotViewGroup;
     private List<Phrase> suggestions = new ArrayList<>();
 
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,7 +127,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             public void run() {
                 robotViewGroup.setVisibility(View.VISIBLE);
                 if (!isDialogFlow && !TextUtils.isEmpty(text)) {
-                        pepperTxt.setText(text);
+                    pepperTxt.setText(text);
                 }
                 resetLayout(text);
             }
@@ -137,17 +136,21 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     private void resetLayout(final String text) {
+        if (!TextUtils.isEmpty(text)) {
+            return;
+        }
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(pepperTxt.getText().toString().equals(text)){
+                if (pepperTxt.getText().toString().equals(text)) {
                     pepperTxt.setText("");
                     dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                     qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                     pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_background));
-                }else {
-                    handler.postDelayed(this,5000);
+                    fillSuggestion();
+                } else {
+                    handler.postDelayed(this, 5000);
                 }
             }
         }, 5000);

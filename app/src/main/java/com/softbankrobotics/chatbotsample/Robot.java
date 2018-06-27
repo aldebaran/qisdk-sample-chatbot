@@ -5,6 +5,7 @@
 package com.softbankrobotics.chatbotsample;
 
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
@@ -16,6 +17,10 @@ import com.aldebaran.qi.sdk.object.conversation.Chatbot;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that gathers main robot-related operations of our application.
@@ -63,12 +68,12 @@ public class Robot implements RobotLifecycleCallbacks {
         // Create chatbots
         qichatbot = createQiChatbot();
         uiNotifier.updateQiChatSuggestions(qichatbot.globalRecommendations(100));
-        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext,uiNotifier);
+        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext, uiNotifier);
 
         // Create the chat from its chatbots
         chat = ChatBuilder.with(qiContext)
-                          .withChatbot(qichatbot, dialogFlowChatbot)
-                          .build();
+                .withChatbot(qichatbot, dialogFlowChatbot)
+                .build();
 
         setChatListeners();
         chat.async().run();
@@ -76,15 +81,10 @@ public class Robot implements RobotLifecycleCallbacks {
 
     private QiChatbot createQiChatbot() {
 
-        // Create a topic
-        Topic topic = TopicBuilder.with(qiContext)
-                                  .withResource(R.raw.shop)
-                                  .build();
-
         // Create the QiChatbot from a topic
         return QiChatbotBuilder.with(qiContext)
-                               .withTopic(topic)
-                               .build();
+                .withTopics(getTopics())
+                .build();
     }
 
     private void setChatListeners() {
@@ -161,4 +161,27 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.removeAllOnFallbackReplyFoundForListeners();
         chat.removeAllOnNoReplyFoundForListeners();
     }
+
+
+    public List<Topic> getTopics() {
+        List<Topic> topics = new ArrayList<>();
+        for (Field r : R.raw.class.getFields()) {
+            try {
+                TypedValue value = new TypedValue();
+                qiContext.getResources().getValue(r.getInt(r), value, true);
+                if (value.string.toString().endsWith(".top")) {
+                    topics.add(TopicBuilder.with(qiContext)
+                            .withResource(r.getInt(r))
+                            .build());
+                }
+
+            } catch (IllegalAccessException e) {
+                Log.i(TAG, e.getMessage());
+            }
+        }
+
+        return topics;
+    }
+
+
 }

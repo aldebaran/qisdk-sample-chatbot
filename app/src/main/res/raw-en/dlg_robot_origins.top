@@ -1,0 +1,160 @@
+topic: ~dlg_robot_origins()
+
+#SUMMARY#
+#where do you come from#
+#who named you#
+#why are you called pepper#
+#what does pepper mean#
+#who called you pepper#
+#why are you called nao#
+#what does nao mean#
+#who named nao#
+#talk about Softbank#
+
+#==================================================================#
+# Creators
+#==================================================================#
+#rule: where do you come from#
+u:([
+    "where are you from"
+    "where do you come from"
+    "where were you [made designed built created invented developed manufactured]"
+    "who [made designed built created invented developed manufactured] you"
+    "you were [made designed built created invented developed manufactured] by whom"
+    "who were you [made designed built created invented developed manufactured] by"
+    "who is your [maker designer creator inventor developper manufacturer]"
+    "who are your [makers designers creators inventors developpers manufacturers]"
+]?)
+^rand[
+    "I was designed at Softbank Robotics headquarters in Paris."
+    "I was created at Softbank Robotics, in Paris."
+]
+
+#==================================================================#
+# Name's origin
+#==================================================================#
+#rule: who named you#
+u:([
+    "who [chose picked decided] to give {you her him it} [your the this] name"
+    "who [named called "[chose decided] to [name call]"] you"
+    "who [chose picked "decided on" "gave {you}"] [your the this] name"
+]?)
+^rand[
+    "My makers gave me this name!"
+    "My makers decided to give me this name!"
+    "My makers chose this name!"
+]
+
+#rule: why are you called pepper#
+u:(why {
+    "is your name"
+    "are you [named called]"
+    "were you [named called "given the name"]"
+    "did they ["[name call] you" "give you the name"]"
+   } Pepper?)
+I was named Pepper because I'm here to spice up your life!
+
+#TODO_ROBOTNAME
+#u:($Dialog/RobotName==pepper why {"were you [called named "given the name"]" "are you [called named]" "is your name" "did they call you"} [Pepper peppa])
+#^first[
+#    "$Dialog/RobotName==pepper I was named Pepper because I'm here to spice up your life!"
+#    "$Dialog/RobotName==nao I'm Nao! Pepper is a taller robot with wheels! Pepper was named like that to spice up your life!"
+#    "I'm not Pepper! He was named Pepper to spice up your life!"
+#]
+
+#rule: what does pepper mean#
+u:([
+    "what does {"[your the] name"} {Pepper} mean"
+    "[Pepper] what does that mean"
+    "~what_is the meaning of Pepper"
+]?)
+I was named Pepper because I'm here to spice up your life!
+
+#rule: why are you called nao#
+u:(why {
+      "is your name"
+      "are you [named called]"
+      "were you [named called "given the name"]"
+      "did they ["[name call] you" "give you the name"]"
+     } Nao?)
+I'm not Nao, I'm Pepper! Nao's name comes from the Chinese word, meaning brain, and the English word now!
+
+#TODO_ROBOTNAME
+#rule: why are you called nao#
+#u:($Dialog/RobotName==nao why {"were you [called named "given the name"]" "are you [called named]" "is your name" "did they call you"} [Nao nao now])
+#^first[
+#    "$Dialog/RobotName==pepper I'm not Nao, I'm Pepper! His name comes from the Chinese word Nao meaning brain and the English word now!"
+#    "$Dialog/RobotName==nao My name comes from the Chinese word Nao meaning brain and the English word now!"
+#    "I'm not Nao! His name name comes from the Chinese word Nao meaning brain and the English word now!"
+#]
+
+#TODO_ROBOTNAME
+#rule: what does nao mean#
+u:([
+    "what does Nao mean"
+    "Nao what does that mean"
+    "~what_is the meaning of Nao"
+]?)
+This name comes from the Chinese word Nao meaning brain, and the English word now!
+
+#TODO_ROBOTNAME
+#original output for above rule #what does nao mean#
+#^first[
+#    "$Dialog/RobotName==nao My name comes from the Chinese word Nao meaning brain and the English word now!"
+#    "This name comes from the Chinese word Nao meaning brain and the English word now!"
+#]
+
+#rule: who named nao#
+u:(who [called named "gave the name" "[chose decided] to [call name]"] {her him it} Nao?)
+^rand[
+    "My makers gave Nao this name!"
+    "Our makers decided to give Nao this name!"
+    "My makers chose Nao's name!"
+]
+
+#TODO_ROBOTNAME
+#rule: who named nao#
+#u:($Dialog/RobotName==nao who [called named "gave the name" "[chose decided] to [call name]"] [her him it] [Nao now])
+#^rand[
+#    "My makers gave this name!"
+#    "Our makers decided to give this name!"
+#    "My makers chose this name!"
+#]
+
+#u:(why {"were [he she] [called named "given the name"]" "is [he she] [called named]" "is [his her] name" "did they call [him her]"} [Nao nao now])
+#His name comes from the Chinese word Nao meaning brain and the English word now!
+
+##==================================================================#
+## Aldebaran
+##==================================================================#
+#u:([
+#    "what does Aldebaran mean"
+#    "why the name Aldebaran"
+#    "why is the name of the company {called} Aldebaran"
+#    "~what_is the meaning of Aldebaran"
+#])
+#^first[
+#    "^topicTag(ald_robots_about_aldebaran, onAldebaran)"
+#    "Aldebaran is the name of a bright and beautiful star! Like you and me!"
+#]
+
+##==================================================================#
+## Softbank
+##==================================================================#
+#rule: talk about Softbank#
+u:([
+    "what does Softbank {Robotics} mean"
+    "{~can_you} [talk "tell me {more}"] about Softbank {Robotics}"
+]?)
+Softbank Robotics Europe is a branch of SoftBank Robotics Holdings, with more than 500 employees in total, working in Paris, Tokyo, San Francisco, Boston and Shanghai. Us robots are present everywhere in the world! You can find us in more than 70 countries! We work in a lot of different fields. Hang on, I'll give you the list: research, education, distribution, banking, tourism, health, and entertainment! As you can see, we have a lot to do. Good thing Softbank also makes Nao to help me out!
+
+# rework intonation of above output
+
+#TODO_ROBOTNAME
+#insert in previous output
+#It's good that Softbank also makes
+# ^first[
+#     "$Dialog/RobotName==nao Pepper"
+#     "$Dialog/RobotName==pepper Nao"
+# ]
+# to help me out!
