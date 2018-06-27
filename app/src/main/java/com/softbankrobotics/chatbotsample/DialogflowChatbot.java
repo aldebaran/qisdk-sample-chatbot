@@ -4,7 +4,6 @@
  */
 package com.softbankrobotics.chatbotsample;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.aldebaran.qi.sdk.QiContext;
@@ -70,9 +69,8 @@ public class DialogflowChatbot extends BaseChatbot {
      * Build a reply that can be processed by our chatbot, based on the response from Dialogflow
      */
     private StandardReplyReaction replyFromAIResponse(final AIResponse response) {
-        uiNotifier.colorDialogFlow();
         Log.d(TAG, "replyFromAIResponse");
-
+        uiNotifier.colorDialogFlow();
         // Extract relevant data from Dialogflow response
         final Result result = response.getResult();
         String answer       = result.getFulfillment().getSpeech();

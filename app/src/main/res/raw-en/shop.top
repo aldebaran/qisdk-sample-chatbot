@@ -1,9 +1,9 @@
 topic: ~shop()
 
-concept:(buy) [buy purchase]
-concept:(joke) ["{I can tell you a} joke"]
-concept:(daily) ["{when is} daily"]
-concept:(softbank) ["softbank {robotics}"]
+concept:(buy) ["buy purchase"]
+concept:(joke) ["I can tell you a joke"]
+concept:(daily) ["when is daily"]
+concept:(softbank) ["softbank robotics"]
 
 u: (~buy) Do you want to buy wine or beer ?
 

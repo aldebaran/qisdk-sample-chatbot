@@ -4,7 +4,6 @@
  */
 package com.softbankrobotics.chatbotsample;
 
-import android.app.Activity;
 import android.util.Log;
 
 import com.aldebaran.qi.sdk.QiContext;
@@ -17,8 +16,6 @@ import com.aldebaran.qi.sdk.object.conversation.Chatbot;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
-
-import java.util.List;
 
 /**
  * Class that gathers main robot-related operations of our application.
@@ -65,6 +62,7 @@ public class Robot implements RobotLifecycleCallbacks {
 
         // Create chatbots
         qichatbot = createQiChatbot();
+        uiNotifier.updateQiChatSuggestions(qichatbot.globalRecommendations(100));
         Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext,uiNotifier);
 
         // Create the chat from its chatbots

@@ -14,6 +14,13 @@ import android.widget.TextView;
 
 import com.aldebaran.qi.sdk.QiSDK;
 import com.aldebaran.qi.sdk.design.activity.RobotActivity;
+import com.aldebaran.qi.sdk.object.conversation.Phrase;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 /**
  * Main activity of the application.
@@ -31,13 +38,14 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private TextView suggestion4;
     private boolean isDialogFlow = false;
     private Group robotViewGroup;
-
+    private List<Phrase> suggestions = new ArrayList<>();
 
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         dialogFlowIcon = findViewById(R.id.dialogFlow);
         qiChatBotIcon = findViewById(R.id.qiChatBot);
         pepperTxt = findViewById(R.id.pepperTxt);
@@ -68,14 +76,15 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     private void fillSuggestion() {
+        if (suggestions.isEmpty()) {
+            return;
+        }
+        int[] fourRandomInt = get4RandomInt(suggestions.size());
+        suggestion1.setText(suggestions.get(fourRandomInt[0]).getText());
+        suggestion2.setText(suggestions.get(fourRandomInt[1]).getText());
+        suggestion3.setText(suggestions.get(fourRandomInt[2]).getText());
+        suggestion4.setText(suggestions.get(fourRandomInt[3]).getText());
 
-        int[] towRandomIntQi = Recommendation.getInstance().get2RandomInt(Recommendation.getInstance().getQiRecommendation().size());
-        int[] towRandomIntFlow = Recommendation.getInstance().get2RandomInt(Recommendation.getInstance().getDialogFlowRecommendation().size());
-
-        suggestion1.setText(Recommendation.getInstance().getQiRecommendation().get(towRandomIntQi[0]));
-        suggestion2.setText(Recommendation.getInstance().getQiRecommendation().get(towRandomIntQi[1]));
-        suggestion3.setText(Recommendation.getInstance().getDialogFlowRecommendation().get(towRandomIntFlow[0]));
-        suggestion4.setText(Recommendation.getInstance().getDialogFlowRecommendation().get(towRandomIntFlow[1]));
     }
 
     @Override
@@ -120,8 +129,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 robotViewGroup.setVisibility(View.VISIBLE);
                 if (!isDialogFlow && !TextUtils.isEmpty(text)) {
                         pepperTxt.setText(text);
-                        resetLayout(text);
                 }
+                resetLayout(text);
             }
         });
 
@@ -146,9 +155,29 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void updateQiChatSuggestions(List<Phrase> suggestions) {
+        this.suggestions = suggestions;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fillSuggestion();
+            }
+        });
     }
 
+    public int[] get4RandomInt(int maxRange) {
+        int[] result = new int[4];
+        Set<Integer> used = new HashSet<>();
+        Random gen = new Random();
+        for (int i = 0; i < result.length; i++) {
+            int newRandom;
+            do {
+                newRandom = gen.nextInt(maxRange);
+            } while (used.contains(newRandom));
+            result[i] = newRandom;
+            used.add(newRandom);
+        }
+        return result;
+    }
 
 }
