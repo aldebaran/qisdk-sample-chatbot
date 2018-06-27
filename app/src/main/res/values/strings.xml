@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">ChatbotSample</string>
+
+
+    <!-- Globals -->
+    <string name="no">\"no\"</string>
+    <string name="yes">\"yes\"</string>
+    <string name="retry">Retry</string>
+    <string name="setting">Settings</string>
+    <string name="exit">Exit</string>
+    <string name="skip">Skip</string>
+
+    <string name="app_introduction">With the power of local and remote chat bots, I will try to reply to what you will say. Here are some examples of things you can tell me.</string>
 </resources>
