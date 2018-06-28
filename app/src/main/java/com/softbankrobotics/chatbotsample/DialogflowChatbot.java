@@ -59,7 +59,6 @@ public class DialogflowChatbot extends BaseChatbot {
 
     @Override
     public void acknowledgeSaid(final Phrase phrase, final Locale locale) {
-        uiNotifier.setText(phrase.getText());
         Log.i(TAG, "The robot uttered this reply, provided by another chatbot: "+ phrase.getText());
     }
 

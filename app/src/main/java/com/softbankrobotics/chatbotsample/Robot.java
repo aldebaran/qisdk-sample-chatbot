@@ -15,12 +15,15 @@ import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.Chatbot;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
+import com.aldebaran.qi.sdk.object.conversation.QiChatExecutor;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class that gathers main robot-related operations of our application.
@@ -34,7 +37,7 @@ public class Robot implements RobotLifecycleCallbacks {
     private Chat chat;
     private QiContext qiContext;
     private UiNotifier uiNotifier;
-    private QiChatbot qichatbot;
+    private QiChatbot qiChatbot;
 
     public Robot(UiNotifier uiNotifier) {
         this.uiNotifier = uiNotifier;
@@ -66,17 +69,27 @@ public class Robot implements RobotLifecycleCallbacks {
         Log.d(TAG, "runChat()");
 
         // Create chatbots
-        qichatbot = createQiChatbot();
-        uiNotifier.updateQiChatSuggestions(qichatbot.globalRecommendations(100));
+        qiChatbot = createQiChatbot();
+        uiNotifier.updateQiChatSuggestions(qiChatbot.globalRecommendations(100));
         Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext, uiNotifier);
-
+        setExecutor();
         // Create the chat from its chatbots
         chat = ChatBuilder.with(qiContext)
-                .withChatbot(qichatbot, dialogFlowChatbot)
+                .withChatbot(qiChatbot, dialogFlowChatbot)
                 .build();
 
         setChatListeners();
         chat.async().run();
+
+    }
+
+    private void setExecutor() {
+        Map<String, QiChatExecutor> executors = new HashMap<>();
+
+        // Map the executor name from the topic to our qiChatbotExecutor
+        executors.put("launchAnimation", new MyQiChatExecutor(qiContext));
+        // Set the executors to the qiChatbot
+        qiChatbot.setExecutors(executors);
     }
 
     private QiChatbot createQiChatbot() {
