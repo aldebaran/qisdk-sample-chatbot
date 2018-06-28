@@ -79,10 +79,10 @@ public class MainActivity extends RobotActivity implements UiNotifier {
             return;
         }
         int[] fourRandomInt = get4RandomInt(suggestions.size());
-        suggestion1.setText(suggestions.get(fourRandomInt[0]).getText());
-        suggestion2.setText(suggestions.get(fourRandomInt[1]).getText());
-        suggestion3.setText(suggestions.get(fourRandomInt[2]).getText());
-        suggestion4.setText(suggestions.get(fourRandomInt[3]).getText());
+        suggestion1.setText(String.format(getString(R.string.suggestion_format), suggestions.get(fourRandomInt[0]).getText()));
+        suggestion2.setText(String.format(getString(R.string.suggestion_format), suggestions.get(fourRandomInt[1]).getText()));
+        suggestion3.setText(String.format(getString(R.string.suggestion_format), suggestions.get(fourRandomInt[2]).getText()));
+        suggestion4.setText(String.format(getString(R.string.suggestion_format), suggestions.get(fourRandomInt[3]).getText()));
 
     }
 
