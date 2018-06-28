@@ -39,6 +39,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private boolean isDialogFlow = false;
     private Group robotViewGroup;
     private List<Phrase> suggestions = new ArrayList<>();
+    final Handler handler = new Handler();
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -104,14 +105,14 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     public void colorQiChatBot() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
-                    dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
-                    pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
-                }
-            });
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
+                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
+            }
+        });
     }
 
     @Override
@@ -141,25 +142,18 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     }
 
     private void resetLayout(final String text) {
-        if (TextUtils.isEmpty(text) && TextUtils.isEmpty(pepperTxt.getText())) {
-            return;
-        }
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (pepperTxt.getText().toString().equals(text)) {
+        if (TextUtils.isEmpty(text)) {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     pepperTxt.setText("");
                     dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                     qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
                     pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_background));
                     fillSuggestion();
-                } else {
-                    handler.postDelayed(this, 5000);
                 }
-            }
-        }, 5000);
-
+            }, 500);
+        }
     }
 
     @Override
