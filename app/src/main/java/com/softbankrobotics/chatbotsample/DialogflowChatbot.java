@@ -67,7 +67,6 @@ public class DialogflowChatbot extends BaseChatbot {
      */
     private StandardReplyReaction replyFromAIResponse(final AIResponse response) {
         Log.d(TAG, "replyFromAIResponse");
-        uiNotifier.isDialogFlow(true);
         // Extract relevant data from Dialogflow response
         final Result result = response.getResult();
         String answer       = result.getFulfillment().getSpeech();
@@ -78,13 +77,7 @@ public class DialogflowChatbot extends BaseChatbot {
         // response according the name of the intent that was triggered
 
         BaseChatbotReaction reaction = null;
-        if (EXCITEMENT_ACTION.equals(action)) {
-            // An action is provided with the Dialogflow response: then add an animation to our reply
-            reaction = new ChatbotUtteredAndAnimatedReaction(getQiContext(), answer, R.raw.nicereaction_a001);
-        } else {
-            // Otherwise let's have a simple reaction where the answer is just said
-            reaction = new ChatbotUtteredReaction(getQiContext(), answer);
-        }
+        reaction = new ChatbotUtteredReaction(getQiContext(), answer, uiNotifier);
 
         // Make the reply and return it
         return new StandardReplyReaction(reaction, FALLBACK);

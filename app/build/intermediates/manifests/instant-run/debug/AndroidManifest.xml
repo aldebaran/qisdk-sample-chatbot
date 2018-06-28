@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:testOnly="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.softbankrobotics.chatbotsample.MainActivity" >
+        <activity android:name="com.softbankrobotics.chatbotsample.MainActivity" />
+        <activity android:name="com.softbankrobotics.chatbotsample.AppRequirementActivity" />
+        <activity android:name="com.softbankrobotics.chatbotsample.AppIntroductionActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

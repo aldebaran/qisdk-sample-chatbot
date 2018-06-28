@@ -32,6 +32,7 @@ public class AppIntroductionActivity extends RobotActivity implements RobotLifec
             public void onClick(View v) {
                 Intent intent = new Intent(AppIntroductionActivity.this, MainActivity.class);
                 startActivity(intent);
+                finishAffinity();
             }
         });
 

@@ -22,18 +22,20 @@ import java.util.concurrent.ExecutionException;
 public class ChatbotUtteredReaction extends BaseChatbotReaction {
 
     private static final String TAG = "DialogflowChatbotReac";
+    private final UiNotifier uiNotifier;
 
     private String toBeSaid;
     private Future<Void> fsay;
 
-    ChatbotUtteredReaction(final QiContext qiContext, final String answer) {
+    ChatbotUtteredReaction(final QiContext qiContext, final String answer, UiNotifier uiNotifier) {
         super(qiContext);
         toBeSaid = answer;
+        this.uiNotifier = uiNotifier;
     }
 
     @Override
     public void runWith(final SpeechEngine speechEngine) {
-
+        uiNotifier.isDialogFlow(true);
         // All Say actions that must be executed inside this method must be created via the SpeechEngine
         Say say = SayBuilder.with(speechEngine)
                             .withText(toBeSaid)
