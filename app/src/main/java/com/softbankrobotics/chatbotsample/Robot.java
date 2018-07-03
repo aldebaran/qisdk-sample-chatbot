@@ -175,7 +175,7 @@ public class Robot implements RobotLifecycleCallbacks {
     }
 
 
-    public List<Topic> getTopics() {
+    private List<Topic> getTopics() {
         List<Topic> topics = new ArrayList<>();
         for (Field r : R.raw.class.getFields()) {
             try {
