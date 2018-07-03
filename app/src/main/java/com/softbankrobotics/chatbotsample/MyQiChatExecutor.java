@@ -39,7 +39,6 @@ class MyQiChatExecutor extends BaseQiChatExecutor {
 
     @Override
     public void stop() {
-        // Do nothing
         if (animationFuture != null) {
             animationFuture.cancel(true);
         }
