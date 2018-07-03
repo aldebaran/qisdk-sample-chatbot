@@ -1,5 +1,8 @@
 package com.softbankrobotics.chatbotsample;
 
+import android.util.Log;
+
+import com.aldebaran.qi.Future;
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.builder.AnimateBuilder;
 import com.aldebaran.qi.sdk.builder.AnimationBuilder;
@@ -8,9 +11,12 @@ import com.aldebaran.qi.sdk.object.actuation.Animation;
 import com.aldebaran.qi.sdk.object.conversation.BaseQiChatExecutor;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 class MyQiChatExecutor extends BaseQiChatExecutor {
     private final QiContext qiContext;
+    private Future<Void> animationFuture;
+    private String TAG = "MyQiChatExecutor";
 
     MyQiChatExecutor(QiContext context) {
         super(context);
@@ -34,8 +40,10 @@ class MyQiChatExecutor extends BaseQiChatExecutor {
     @Override
     public void stop() {
         // Do nothing
+        if (animationFuture != null) {
+            animationFuture.cancel(true);
+        }
     }
-
 
     private void animate(QiContext qiContext, int resource, boolean async) {
         // Create an animation.
@@ -48,7 +56,12 @@ class MyQiChatExecutor extends BaseQiChatExecutor {
                 .withAnimation(animation) // Set the animation.
                 .build(); // Build the animate action.
         if (async) {
-            animate.async().run();
+            animationFuture = animate.async().run();
+            try {
+                animationFuture.get();
+            } catch (ExecutionException e) {
+                Log.e(TAG, e.getMessage());
+            }
         } else {
             animate.run();
         }

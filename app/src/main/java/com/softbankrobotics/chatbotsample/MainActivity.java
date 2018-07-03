@@ -27,7 +27,7 @@ import java.util.Set;
  */
 public class MainActivity extends RobotActivity implements UiNotifier {
 
-    Robot robot;
+    private Robot robot;
 
     private TextView qiChatBotIcon;
     private TextView dialogFlowIcon;
