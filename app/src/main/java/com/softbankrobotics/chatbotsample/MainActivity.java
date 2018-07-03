@@ -58,8 +58,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         findViewById(R.id.btn_exit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-                System.exit(0);
+                finishAffinity();
             }
         });
         findViewById(R.id.resetSuggestions).setOnClickListener(new View.OnClickListener() {
