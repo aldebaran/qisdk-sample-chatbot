@@ -5,6 +5,7 @@
 package com.softbankrobotics.chatbotsample;
 
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.aldebaran.qi.sdk.QiContext;
 import com.aldebaran.qi.sdk.RobotLifecycleCallbacks;
@@ -14,8 +15,15 @@ import com.aldebaran.qi.sdk.builder.TopicBuilder;
 import com.aldebaran.qi.sdk.object.conversation.Chat;
 import com.aldebaran.qi.sdk.object.conversation.Chatbot;
 import com.aldebaran.qi.sdk.object.conversation.Phrase;
+import com.aldebaran.qi.sdk.object.conversation.QiChatExecutor;
 import com.aldebaran.qi.sdk.object.conversation.QiChatbot;
 import com.aldebaran.qi.sdk.object.conversation.Topic;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Class that gathers main robot-related operations of our application.
@@ -24,8 +32,16 @@ public class Robot implements RobotLifecycleCallbacks {
 
     private static final String TAG = "Robot";
 
+    public static final int MAX_RECOMMENDATION = 10;
+
     private Chat chat;
     private QiContext qiContext;
+    private UiNotifier uiNotifier;
+    private QiChatbot qiChatbot;
+
+    public Robot(UiNotifier uiNotifier) {
+        this.uiNotifier = uiNotifier;
+    }
 
     @Override
     public void onRobotFocusGained(final QiContext theContext) {
@@ -53,30 +69,35 @@ public class Robot implements RobotLifecycleCallbacks {
         Log.d(TAG, "runChat()");
 
         // Create chatbots
-        Chatbot qichatbot = createQiChatbot();
-        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext);
-
+        qiChatbot = createQiChatbot();
+        uiNotifier.updateQiChatSuggestions(qiChatbot.globalRecommendations(100));
+        Chatbot dialogFlowChatbot = new DialogflowChatbot(qiContext, uiNotifier);
+        setExecutor();
         // Create the chat from its chatbots
         chat = ChatBuilder.with(qiContext)
-                          .withChatbot(qichatbot, dialogFlowChatbot)
-                          .build();
+                .withChatbot(qiChatbot, dialogFlowChatbot)
+                .build();
 
         setChatListeners();
-
         chat.async().run();
+
+    }
+
+    private void setExecutor() {
+        Map<String, QiChatExecutor> executors = new HashMap<>();
+
+        // Map the executor name from the topic to our qiChatbotExecutor
+        executors.put("launchAnimation", new MyQiChatExecutor(qiContext));
+        // Set the executors to the qiChatbot
+        qiChatbot.setExecutors(executors);
     }
 
     private QiChatbot createQiChatbot() {
 
-        // Create a topic
-        Topic topic = TopicBuilder.with(qiContext)
-                                  .withResource(R.raw.shop)
-                                  .build();
-
         // Create the QiChatbot from a topic
         return QiChatbotBuilder.with(qiContext)
-                               .withTopic(topic)
-                               .build();
+                .withTopics(getTopics())
+                .build();
     }
 
     private void setChatListeners() {
@@ -97,6 +118,7 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.addOnSayingChangedListener(new Chat.OnSayingChangedListener() {
             @Override
             public void onSayingChanged(final Phrase phrase) {
+                uiNotifier.setText(phrase.getText());
                 Log.i(TAG, "chat.onSayingChanged(): " + phrase.getText());
             }
         });
@@ -151,4 +173,26 @@ public class Robot implements RobotLifecycleCallbacks {
         chat.removeAllOnFallbackReplyFoundForListeners();
         chat.removeAllOnNoReplyFoundForListeners();
     }
+
+
+    private List<Topic> getTopics() {
+        List<Topic> topics = new ArrayList<>();
+        for (Field r : R.raw.class.getFields()) {
+            try {
+                TypedValue value = new TypedValue();
+                qiContext.getResources().getValue(r.getInt(r), value, true);
+                if (value.string.toString().endsWith(".top")) {
+                    topics.add(TopicBuilder.with(qiContext)
+                            .withResource(r.getInt(r))
+                            .build());
+                }
+
+            } catch (IllegalAccessException e) {
+                Log.i(TAG, e.getMessage());
+            }
+        }
+
+        return topics;
+    }
+
 }

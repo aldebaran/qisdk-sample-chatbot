@@ -19,7 +19,6 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
 import static com.aldebaran.qi.sdk.object.conversation.ReplyPriority.FALLBACK;
-import static com.aldebaran.qi.sdk.object.conversation.ReplyPriority.NORMAL;
 
 /**
  * A sample chatbot that delegates questions/answers to a Dialogflow agent.
@@ -27,11 +26,12 @@ import static com.aldebaran.qi.sdk.object.conversation.ReplyPriority.NORMAL;
 public class DialogflowChatbot extends BaseChatbot {
 
     private static final String TAG = "DialogflowChatbot";
-    private static final String DEFAULT_FALLBACK_INTENT = "Default Fallback Intent";
     private static final String EXCITEMENT_ACTION = "excitement";
+    private final UiNotifier uiNotifier;
 
-    DialogflowChatbot(final QiContext context) {
+    DialogflowChatbot(final QiContext context, UiNotifier uiNotifier) {
         super(context);
+        this.uiNotifier = uiNotifier;
     }
 
     @Override
@@ -43,10 +43,10 @@ public class DialogflowChatbot extends BaseChatbot {
             EmptyChatbotReaction emptyReac = new EmptyChatbotReaction(getQiContext());
             return new StandardReplyReaction(emptyReac, ReplyPriority.FALLBACK);
         } else {
+
             // Ask the online DialogFlow agent to answer to the phrase
             DialogflowAgent dfAgent = DialogflowAgent.getInstance();
             AIResponse aiResponse = dfAgent.answerTo(phrase.getText());
-
             // Return a reply built from the agent's response
             return replyFromAIResponse(aiResponse);
         }
@@ -66,9 +66,7 @@ public class DialogflowChatbot extends BaseChatbot {
      * Build a reply that can be processed by our chatbot, based on the response from Dialogflow
      */
     private StandardReplyReaction replyFromAIResponse(final AIResponse response) {
-
         Log.d(TAG, "replyFromAIResponse");
-
         // Extract relevant data from Dialogflow response
         final Result result = response.getResult();
         String answer       = result.getFulfillment().getSpeech();
@@ -77,21 +75,11 @@ public class DialogflowChatbot extends BaseChatbot {
 
         // Set the priority of our reply, here by detecting the fallback nature of the Dialogflow
         // response according the name of the intent that was triggered
-        ReplyPriority replyPriority = NORMAL;
-        if (DEFAULT_FALLBACK_INTENT.equals(intentName)) {
-            replyPriority = FALLBACK;
-        }
 
         BaseChatbotReaction reaction = null;
-        if (EXCITEMENT_ACTION.equals(action)) {
-            // An action is provided with the Dialogflow response: then add an animation to our reply
-            reaction = new ChatbotUtteredAndAnimatedReaction(getQiContext(), answer, R.raw.nicereaction_a001);
-        } else {
-            // Otherwise let's have a simple reaction where the answer is just said
-            reaction = new ChatbotUtteredReaction(getQiContext(), answer);
-        }
+        reaction = new ChatbotUtteredReaction(getQiContext(), answer, uiNotifier);
 
         // Make the reply and return it
-        return new StandardReplyReaction(reaction, replyPriority);
+        return new StandardReplyReaction(reaction, FALLBACK);
     }
 }

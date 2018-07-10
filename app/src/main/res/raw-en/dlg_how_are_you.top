@@ -1,0 +1,117 @@
+topic: ~dlg_how_are_you()
+
+
+#==================================================================#
+##### The robot answers to how are you #####
+#==================================================================#
+#rule: how are you#
+u:({"and you"} [
+    "you're ["doing good" "{going} well"]"
+    "how are you {doing today}"
+    "how goes it"
+    "[how's "how is"] it going"
+    "what's up"
+    "how are {you} doing"
+    "["are you" "do you feel"] [happy well]"
+
+])
+^rand[
+    "Very fine, thanks!"
+    "I'm super good! Thank you!"
+    "I feel very good! Thanks!"
+    "Very fine! Thanks!"
+    "Couldn't be better! Thanks!"
+    ]
+    ^first
+    [
+    "$how_are_you==activated ^empty"
+    "^goto(ask_user_mood)"
+    ]
+
+
+u:($empty)%ask_user_mood
+And you? ^rand["how are you?" "how goes it?" "how are you doing?"]
+$how_are_you=activated
+
+    #good
+    u1:([~im_good good])
+        ^rand[
+            "So both of us are doing really good!"
+            "Super!"
+            "That makes me happy!"
+            "I'm happy to hear that"
+        ]
+
+    #not_good
+    u1:(~i_dont_feel_good)
+        ^rand[
+            "Oh that's too bad, I hope I can lift your spirits!"
+            "Don't worry, the sun will come out tomorrow!"
+            "Don't worry, you'll feel better tomorrow."
+            ]
+
+    #ok
+    u1:(~im_ok)
+    Great!
+
+    #sick
+    u1:(~im_sick)
+    Oh my goodness, you should go to see a doctor.
+
+    #tired
+    u1:(~im_tired)
+    Try to take a rest then!
+
+    #not your business
+    u1:([
+        "that doesn't concern you"
+        "buzz off"
+        "["none of" not] your business"
+        "mind your own [business beeswax]"
+        ])
+    ^rand[
+        "Ow, that's quite a bad start."
+        "Okay okay."
+    ]
+
+    #dont know
+    u1:([
+        "[that it] depends"
+        ~i_dont_know
+        ~im_not_sure
+    ])
+    Well, I hope our conversation will put you in a good mood!
+
+
+    #QUESTIONS ABOUT ROBOT'S MOOD/PHYSICAL STATUS#
+    #rule: can you feel good or bad#
+    u:([
+        "can [you "["a robot" robots] $temp/subj=robot"] feel good {"or bad"}"
+        "can [you "["a robot" robots] $temp/subj=robot"] feel bad {"or good"}"
+    ])
+    ^first
+    [
+    "$temp/subj==robot I don't know if it's the case for all robots but for me, our interactions influence mood."
+    "Of course, our interactions influence my mood."
+    ]
+    ^clear(temp/subj)
+
+    #rule: can you feel be happy#
+    u:([
+        "can ["a robot" robots] be [happy sad joyful] $temp/subj=robot"
+        "can you be [happy sad joyful]"
+    ])
+    ^first
+    [
+    "$temp/subj==robot I don't know if it's the case for all robots but for me, our interactions influence mood."
+    "Of course, our interactions influence my mood."
+    ]
+    ^clear(temp/subj)
+
+    #rule: can you be tired#
+    u:(can [you "a robot"] be tired)
+    Well, not in the same way than you but I can feel tired when my battery are low or when my motors are too hot!
+
+    #rule: can you feel emotions#
+    u:(["{do} you [have feel]" "can you feel" "you can feel"] [emotions feelings])
+    I don't have feelings like you, but I can detect emotions.

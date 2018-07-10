@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+def qisdkVersion = '1.3.5'
+def supportVersion = '27.1.1'
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -24,17 +25,18 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation "com.android.support:appcompat-v7:$supportVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // QiSDK
-    implementation 'com.aldebaran:qisdk:1.3.3'
-    implementation 'com.aldebaran:qisdk-design:1.3.3'
+    implementation "com.aldebaran:qisdk:$qisdkVersion"
+    implementation "com.aldebaran:qisdk-design:$qisdkVersion"
 
     // Dialogflow v1
     implementation 'ai.api:libai:1.6.12'
 
+    implementation "com.android.support:design:$supportVersion"
 }
