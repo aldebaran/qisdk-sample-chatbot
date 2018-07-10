@@ -131,6 +131,27 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="1.0">
 
+        <TextView
+            android:id="@+id/dialogFlow"
+            style="@style/indicationStyle"
+            android:layout_width="0dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="1dp"
+            android:background="@drawable/top_right_rounded_background"
+            android:text="@string/dialog_flow"
+            app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
+            app:layout_constraintEnd_toEndOf="@+id/pepperTxt"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/qiChatBot" />
+
+        <android.support.constraint.Group
+            android:id="@+id/robotViewGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="imageView2,line,dialogFlow,qiChatBot,pepperTxt"
+            tools:visibility="visible" />
+
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
@@ -162,24 +183,16 @@
         <TextView
             android:id="@+id/qiChatBot"
             style="@style/indicationStyle"
+            android:layout_width="0dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/top_left_rounded_background"
             android:text="@string/qichatbot"
-            app:layout_constraintStart_toEndOf="@+id/pepperTxt"
-            app:layout_constraintTop_toTopOf="@+id/pepperTxt" />
+            app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
+            app:layout_constraintEnd_toStartOf="@+id/dialogFlow"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/pepperTxt" />
 
-        <TextView
-            android:id="@+id/dialogFlow"
-            style="@style/indicationStyle"
-            android:text="@string/dialog_flow"
-            app:layout_constraintBottom_toBottomOf="@+id/pepperTxt"
-            app:layout_constraintStart_toEndOf="@+id/pepperTxt" />
-
-        <android.support.constraint.Group
-            android:id="@+id/robotViewGroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:visibility="visible"
-            app:constraint_referenced_ids="imageView2,line,dialogFlow,qiChatBot,pepperTxt" />
 
 
     </android.support.constraint.ConstraintLayout>

@@ -67,6 +67,7 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 fillSuggestion();
             }
         });
+
         // In this sample, instead of implementing robotlifecycle callbacks in the main activity,
         // we delegate them to a robot dedicated class.
         robot = new Robot(this);
@@ -96,8 +97,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
-                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
+                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.top_left_rounded_background));
+                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_top_right_rounded_background));
                 pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
             }
         });
@@ -107,8 +108,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_button_background));
-                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.green_top_left_rounded_background));
+                dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.top_right_rounded_background));
                 pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_green_background));
             }
         });
@@ -146,8 +147,8 @@ public class MainActivity extends RobotActivity implements UiNotifier {
                 @Override
                 public void run() {
                     pepperTxt.setText("");
-                    dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
-                    qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.idle_button_background));
+                    dialogFlowIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.top_right_rounded_background));
+                    qiChatBotIcon.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.top_left_rounded_background));
                     pepperTxt.setBackground(ContextCompat.getDrawable(MainActivity.this, R.drawable.peper_talk_background));
                     fillSuggestion();
                 }
