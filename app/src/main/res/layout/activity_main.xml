@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:elevation="10dp"
         android:focusable="true"
@@ -107,6 +107,8 @@
 
 
         <ImageView
+            android:layout_margin="10dp"
+            android:padding="10dp"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -145,15 +147,15 @@
             android:id="@+id/suggestion2Container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shape_bubble_arrowHeight="10dp"
-            app:shape_bubble_arrowPosition="right"
-            app:shape_bubble_arrowWidth="10dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/imageView"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shape_bubble_arrowHeight="10dp"
+            app:shape_bubble_arrowPosition="right"
+            app:shape_bubble_arrowWidth="10dp"
             app:shape_bubble_borderRadius="20dp">
 
             <android.support.v7.widget.AppCompatTextView
@@ -181,68 +183,76 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="1.0">
 
-        <TextView
-            android:id="@+id/dialogFlow"
-            style="@style/indicationStyle"
-            android:layout_width="0dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="1dp"
-            android:background="@drawable/top_right_rounded_background"
-            android:text="@string/dialog_flow"
-            app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
-            app:layout_constraintEnd_toEndOf="@+id/pepperTxt"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/qiChatBot" />
-
-        <android.support.constraint.Group
-            android:id="@+id/robotViewGroup"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:constraint_referenced_ids="imageView2,line,dialogFlow,qiChatBot,pepperTxt"
-            tools:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="55dp"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_img_icon_pepper"
-            tools:ignore="ContentDescription" />
-
-        <View
-            android:id="@+id/line"
-            android:layout_width="60dp"
-            android:layout_height="2dp"
-            android:background="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/pepperTxt"
-            style="@style/pepperTalkStyle"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-            app:layout_constraintStart_toEndOf="@+id/line"
-            app:layout_constraintTop_toTopOf="@+id/imageView2" />
-
-
-        <TextView
-            android:id="@+id/qiChatBot"
-            style="@style/indicationStyle"
-            android:layout_width="0dp"
-            android:layout_marginEnd="1dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/top_left_rounded_background"
-            android:text="@string/qichatbot"
-            app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
-            app:layout_constraintEnd_toStartOf="@+id/dialogFlow"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/pepperTxt" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/dialogFlow"
+                style="@style/indicationStyle"
+                android:layout_width="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="1dp"
+                android:background="@drawable/top_right_rounded_background"
+                android:text="@string/dialog_flow"
+                app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
+                app:layout_constraintEnd_toEndOf="@+id/pepperTxt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/qiChatBot" />
+
+            <android.support.constraint.Group
+                android:id="@+id/robotViewGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                app:constraint_referenced_ids="imageView2,line,dialogFlow,qiChatBot,pepperTxt" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_img_icon_pepper"
+                tools:ignore="ContentDescription" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="60dp"
+                android:layout_height="2dp"
+                android:background="@android:color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/pepperTxt"
+                style="@style/pepperTalkStyle"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintStart_toEndOf="@+id/line"
+                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+
+            <TextView
+                android:id="@+id/qiChatBot"
+                style="@style/indicationStyle"
+                android:layout_width="0dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/top_left_rounded_background"
+                android:text="@string/qichatbot"
+                app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
+                app:layout_constraintEnd_toStartOf="@+id/dialogFlow"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/pepperTxt" />
+
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 
