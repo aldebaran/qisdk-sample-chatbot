@@ -39,4 +39,5 @@ dependencies {
     implementation 'ai.api:libai:1.6.12'
 
     implementation "com.android.support:design:$supportVersion"
+    implementation 'com.github.florent37:shapeofview:1.0.7'
 }
