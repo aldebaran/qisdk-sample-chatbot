@@ -6,7 +6,6 @@ package com.softbankrobotics.chatbotsample;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.constraint.Group;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.View;
@@ -37,7 +36,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
     private TextView suggestion3;
     private TextView suggestion4;
     private boolean isDialogFlow = false;
-    private Group robotViewGroup;
     private List<Phrase> suggestions = new ArrayList<>();
     final Handler handler = new Handler();
 
@@ -49,7 +47,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         dialogFlowIcon = findViewById(R.id.dialogFlow);
         qiChatBotIcon = findViewById(R.id.qiChatBot);
         pepperTxt = findViewById(R.id.pepperTxt);
-        robotViewGroup = findViewById(R.id.robotViewGroup);
         suggestion1 = findViewById(R.id.suggestion1);
         suggestion2 = findViewById(R.id.suggestion2);
         suggestion3 = findViewById(R.id.suggestion3);
@@ -120,7 +117,6 @@ public class MainActivity extends RobotActivity implements UiNotifier {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                robotViewGroup.setVisibility(View.VISIBLE);
                 if (!TextUtils.isEmpty(text)) {
                     pepperTxt.setText(text);
                     if (isDialogFlow) {
