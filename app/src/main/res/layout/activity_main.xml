@@ -10,17 +10,17 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/resetSuggestions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="66dp"
+        android:layout_height="66dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:clickable="true"
         android:elevation="10dp"
         android:focusable="true"
         android:scaleType="center"
         app:backgroundTint="@android:color/background_light"
-        app:layout_constraintEnd_toStartOf="@+id/btn_exit0"
+        app:layout_constraintEnd_toStartOf="@+id/btn_exit"
         app:layout_constraintHorizontal_bias="0.534"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,34 +28,22 @@
 
     <ImageView
         android:id="@+id/btn_exit"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="73dp"
+        android:layout_height="60dp"
+        android:scaleType="center"
         android:src="@drawable/ic_baseline_close"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <ImageView
-        android:id="@+id/btn_exit0"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_baseline_close"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingBottom="58dp"
+        android:paddingBottom="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_exit">
@@ -107,13 +95,14 @@
 
 
         <ImageView
-            android:layout_margin="10dp"
-            android:padding="10dp"
             android:id="@+id/imageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
+            android:layout_margin="10dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_img_icon_humanmen"
@@ -185,58 +174,51 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5">
 
             <TextView
                 android:id="@+id/dialogFlow"
                 style="@style/indicationStyle"
                 android:layout_width="0dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginStart="1dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/top_right_rounded_background"
                 android:text="@string/dialog_flow"
-                app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
                 app:layout_constraintEnd_toEndOf="@+id/pepperTxt"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/qiChatBot" />
+                app:layout_constraintStart_toEndOf="@+id/qiChatBot"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
             <android.support.constraint.Group
                 android:id="@+id/robotViewGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
-                app:constraint_referenced_ids="imageView2,line,dialogFlow,qiChatBot,pepperTxt" />
+                app:constraint_referenced_ids="imageView2,dialogFlow,qiChatBot,pepperTxt" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_img_icon_pepper"
                 tools:ignore="ContentDescription" />
-
-            <View
-                android:id="@+id/line"
-                android:layout_width="60dp"
-                android:layout_height="2dp"
-                android:background="@android:color/black"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintStart_toEndOf="@+id/imageView2"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/pepperTxt"
                 style="@style/pepperTalkStyle"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-                app:layout_constraintStart_toEndOf="@+id/line"
-                app:layout_constraintTop_toTopOf="@+id/imageView2" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dialogFlow" />
 
 
             <TextView
@@ -245,12 +227,13 @@
                 android:layout_width="0dp"
                 android:layout_marginEnd="1dp"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/top_left_rounded_background"
                 android:text="@string/qichatbot"
-                app:layout_constraintBottom_toTopOf="@+id/pepperTxt"
                 app:layout_constraintEnd_toStartOf="@+id/dialogFlow"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="@+id/pepperTxt" />
+                app:layout_constraintStart_toStartOf="@+id/pepperTxt"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
         </android.support.constraint.ConstraintLayout>
 
