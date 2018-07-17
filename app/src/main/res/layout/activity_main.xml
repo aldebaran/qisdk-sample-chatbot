@@ -4,27 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_brown"
+    android:background="@color/white_1"
     tools:context=".MainActivity">
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/resetSuggestions"
-        android:layout_width="66dp"
-        android:layout_height="66dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:clickable="true"
-        android:elevation="10dp"
-        android:focusable="true"
-        android:scaleType="center"
-        app:backgroundTint="@android:color/background_light"
-        app:layout_constraintEnd_toStartOf="@+id/btn_exit"
-        app:layout_constraintHorizontal_bias="0.534"
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/headerContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_refresh_black_24dp" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_img_icon_humanmen"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            style="@style/suggestionStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/you_can_say"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+
+    </android.support.constraint.ConstraintLayout>
 
     <ImageView
         android:id="@+id/btn_exit"
@@ -42,121 +56,81 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:paddingBottom="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_exit">
+        app:layout_constraintTop_toBottomOf="@+id/headerContainer">
 
-        <com.github.florent37.shapeofview.shapes.BubbleView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/suggestion4"
+            style="@style/suggestionStyle"
+            android:textAlignment="textStart"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/suggestion2Container"
-            app:shape_bubble_arrowHeight="10dp"
-            app:shape_bubble_arrowPosition="left"
-            app:shape_bubble_arrowWidth="10dp"
-            app:shape_bubble_borderRadius="20dp">
+            app:layout_constraintStart_toEndOf="@+id/resetSuggestions"
+            tools:text="TextView" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/suggestion4"
-                style="@style/suggestionStyle"
-                android:background="@color/bubble_color"
-                tools:text="TextView" />
-        </com.github.florent37.shapeofview.shapes.BubbleView>
-
-
-        <com.github.florent37.shapeofview.shapes.BubbleView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/suggestion3"
+            style="@style/suggestionStyle"
+            android:textAlignment="textStart"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/resetSuggestions"
             app:layout_constraintTop_toTopOf="parent"
-            app:shape_bubble_arrowHeight="10dp"
-            app:shape_bubble_arrowPosition="left"
-            app:shape_bubble_arrowWidth="10dp"
-            app:shape_bubble_borderRadius="20dp">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/suggestion3"
-                style="@style/suggestionStyle"
-                android:background="@color/bubble_color"
-                tools:text="TextView" />
-        </com.github.florent37.shapeofview.shapes.BubbleView>
+            tools:text="TextView" />
 
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/resetSuggestions"
+            android:layout_width="66dp"
+            android:layout_height="66dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:clickable="true"
+            android:elevation="10dp"
+            android:focusable="true"
+            android:scaleType="center"
+            app:backgroundTint="@android:color/background_light"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_img_icon_humanmen"
-            tools:ignore="ContentDescription" />
+            app:srcCompat="@drawable/ic_refresh_black_24dp" />
 
 
-        <com.github.florent37.shapeofview.shapes.BubbleView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/suggestion1"
+            style="@style/suggestionStyle"
+            android:textAlignment="textEnd"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/resetSuggestions"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/suggestion2Container"
-            app:shape_bubble_arrowHeight="10dp"
-            app:shape_bubble_arrowPosition="right"
-            app:shape_bubble_arrowWidth="10dp"
-            app:shape_bubble_borderRadius="20dp">
+            app:layout_constraintTop_toBottomOf="@+id/suggestion2"
+            tools:text="TextView" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/suggestion1"
-                style="@style/suggestionStyle"
-                android:background="@color/bubble_color"
-                tools:text="TextView" />
-        </com.github.florent37.shapeofview.shapes.BubbleView>
 
-        <com.github.florent37.shapeofview.shapes.BubbleView
-            android:id="@+id/suggestion2Container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/suggestion2"
+            style="@style/suggestionStyle"
+            android:textAlignment="textEnd"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toStartOf="@+id/resetSuggestions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shape_bubble_arrowHeight="10dp"
-            app:shape_bubble_arrowPosition="right"
-            app:shape_bubble_arrowWidth="10dp"
-            app:shape_bubble_borderRadius="20dp">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/suggestion2"
-                style="@style/suggestionStyle"
-                android:background="@color/bubble_color"
-                app:layout_constraintEnd_toStartOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="TextView" />
-
-        </com.github.florent37.shapeofview.shapes.BubbleView>
+            tools:text="TextView" />
 
 
     </android.support.constraint.ConstraintLayout>
@@ -164,7 +138,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/grey_brown_light"
+        android:background="@color/warm_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -213,6 +187,7 @@
                 tools:ignore="ContentDescription" />
 
             <android.support.v7.widget.AppCompatTextView
+                tools:text="This is a long response, very long one , can you read it ? if yes it's ok , otherwise you have to make the text bigger so you can read it ,  Are you ok with That ?"
                 android:id="@+id/pepperTxt"
                 style="@style/pepperTalkStyle"
                 app:layout_constraintEnd_toEndOf="parent"
