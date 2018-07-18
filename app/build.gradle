@@ -7,8 +7,8 @@ android {
         applicationId "com.softbankrobotics.chatbotsample"
         minSdkVersion 23
         targetSdkVersion 27
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         // CHATBOT_SAMPLE_DIALOGFLOW_TOKEN is kept out of version control (typically in your
