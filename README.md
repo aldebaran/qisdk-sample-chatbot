@@ -10,10 +10,8 @@ The chat engine utilizes both chatbots to provide a dialog whose
 progress is structured according to a functional scenario while providing
 casual discussion.
 
-* The local qichatbot is in charge of a shopping-oriented conversation whose
-  description in qiChat language is provided in a .top resource file.
-* The Dialogflow chatbot deals with the small talk plus several simple
-  rules about wine.
+* The local qichatbot conversation related to pepper including information about the robot and some simple robot actions.
+* The Dialogflow chatbot deals with some general questions that doesn't exist in the qichatbot topics.
 
 
 ## Minimum configuration
@@ -60,8 +58,7 @@ In the Dialogflow console:
 * Click on *Restore from zip*
 * Then follow instructions to upload the [DialogflowChatbotAgent.zip] file.
 
-This sample agent provides basic interaction about french wine and
-and some customized small talk.
+This sample agent provides fallback intents that reply to some general questions.
 
 
 ## Additional resources ##

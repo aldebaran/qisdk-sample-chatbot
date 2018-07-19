@@ -45,10 +45,7 @@ class ChatbotUtteredReaction<<ChatbotDevelopper>> {
     runWith
     stop
 }
-class ChatbotUtteredAndAnimatedReaction<<ChatbotDevelopper>> {
-    runWith
-    stop
-}
+
 
 Chat o-right- "n" Chatbot
 Chatbot <|-- QiChatbot
@@ -61,7 +58,6 @@ ReplyReaction <|-- StandardReplyReaction
 AutonomousReaction <|-- StandardAutonomousReaction
 
 ChatbotReaction <|-- BaseChatbotReaction
-BaseChatbotReaction <|-- ChatbotUtteredAndAnimatedReaction
 BaseChatbotReaction <|-- ChatbotUtteredReaction
 
 ReplyReaction  *-- "1" ChatbotReaction

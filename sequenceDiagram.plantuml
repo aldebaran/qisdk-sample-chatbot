@@ -22,39 +22,39 @@ box "Internet"
 participant Dialogflow
 endbox
 
-User -> Chat: "Who are you ?"
+User -> Chat: "are we free ?"
 
 activate Chat
-Chat -> QiChatbot:  replyTo("Who are you ?")
+Chat -> QiChatbot:  replyTo("are we free ?")
 activate QiChatbot
-Chat -> DialogflowChatbot: replyTo("Who are you ?")
+Chat -> DialogflowChatbot: replyTo("are we free ?")
 
 note left of QiChatbot: The QiChatbot has no rule\nin its topic that \ncorresponds to this\nuser utterance
 
 activate DialogflowChatbot
-DialogflowChatbot -> DialogflowAgent : answerTo("Who are you ?")
+DialogflowChatbot -> DialogflowAgent : answerTo("are we free ?")
 activate DialogflowAgent
-DialogflowAgent ->> Dialogflow : send an asynchronous query containing "Who are you ?" to the online agent
+DialogflowAgent ->> Dialogflow : send an asynchronous query containing "are we free ?" to the online agent
 activate Dialogflow
 Chat <-- QiChatbot: return StandardReplyReaction(ChatbotReaction, FALLBACK))
 
 deactivate QiChatbot
-DialogflowAgent <-- Dialogflow : return an AIResponse containing "I'm Pepper the robot !"
+DialogflowAgent <-- Dialogflow : return an AIResponse containing "The concept of liberty is a rather hazy one."
 deactivate Dialogflow
 DialogflowChatbot <-- DialogflowAgent : return the AIReponse
 deactivate DialogflowAgent
 
 create DialogflowChatbotReaction
-DialogflowChatbot -> DialogflowChatbotReaction : create a DialogflowChatbotReaction with "I'm Pepper the robot !"
+DialogflowChatbot -> DialogflowChatbotReaction : create a DialogflowChatbotReaction with "The concept of liberty is a rather hazy one."
 create StandardReplyReaction
 DialogflowChatbot -> StandardReplyReaction : create a ReplyReaction with (ChatbotReaction + priority)
 
 deactivate QiChatbot
-Chat <-- DialogflowChatbot: return StandardReplyReaction(DialogflowChatbotReaction, NORMAL))
+Chat <-- DialogflowChatbot: return StandardReplyReaction(DialogflowChatbotReaction, FALLBACK))
 deactivate DialogflowChatbot
 
 activate Chat
-note right of Chat: Choose the first NORMAL reaction if any
+note right of Chat: Choose the FALLBACK since no NORMAL response was provided
 Chat -> DialogflowChatbotReaction: runWith(SpeechEngine)
 deactivate Chat
 
@@ -63,7 +63,7 @@ create Say
 DialogflowChatbotReaction -> Say: SayBuilder.with(speechEngine).build()
 DialogflowChatbotReaction ->> Say: async().run()
 activate Say
-Say -> User : "I'm Pepper the robot !"
+Say -> User : "The concept of liberty is a rather hazy one."
 
 DialogflowChatbotReaction -> Say: get() on the enclosing Future
 Say --> DialogflowChatbotReaction
