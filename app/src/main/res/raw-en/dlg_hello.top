@@ -1,0 +1,172 @@
+topic: ~dlg_hello ^noPick ^noStay()
+
+#concepts in lexicon_enu
+
+#SUMMARY#
+#hello#
+#hello again#
+#hello repeated#
+#good morning (NAL)#
+#good afternoon (NAL)#
+#good evening#
+#nice to meet you#
+#met already
+#nice to see you {again}#
+
+#COMMENTED#
+#hello proactive#
+#hello + robot name#
+#good morning + robot name (NAL)#
+#good afternoon + robot name (NAL)#
+#good evening + robot name#
+#what you say is scripted#
+
+#==================================================================#
+#### Robot greets back when it matches one of the inputs ####
+#==================================================================#
+
+#TODO_KNOWLEDGE
+#rule: hello proactive#
+#proposal: %hello
+#^firstOptional[
+#"^notContainsKnowledge(Pepper, sayHelloTo, $Dialog/ID) ^rand["Hello" "Hi" "$Dialog/Hour>5 $Dialog/Hour<12 Good morning!" "$Dialog/Hour>11 $Dialog/Hour<18 Good afternoon" "[$Dialog/Hour==23 $Dialog/Hour>17] good evening"] ^queryKnowledge($Dialog/ID, name, ?) $duration=^currentDateTime+12:00 ^setExpiringKnowledge(Pepper, sayHelloTo, $Dialog/ID, $duration)
+#    ^firstOptional[
+#    "^topicTagReactivate(dlg_how_are_you, ask_state)"
+#    "^topicRandom"
+#    ]"
+#"^rand["Hello" "Hi" "$Dialog/Hour>5 $Dialog/Hour<12 Good morning!" "$Dialog/Hour>11 $Dialog/Hour<18 Good afternoon!" "[$Dialog/Hour>17 $Dialog/Hour==23] Good evening!"] ^deactivate(hello)"
+#]
+
+#rule: hello#
+u:(_[hello howdy hiya hi greetings aloha "hey there" "salutations $salutations=true"])
+^first[
+    "$greeting==done ^enableThenGoto(hello_again)"
+    "$salutations==true salutations ^clear(salutations) $greeting=done"
+    "^rand[$1 hello howdy hiya hi greetings aloha "hey there"] $greeting=done"
+]
+
+#rule: hello_again#
+u:(^empty) %hello_again
+[
+    "Hello again"
+    "You've already said hello! But I appreciate it!"
+    "You really like greetings! That's nice of you! ^rand[hello howdy hiya hi salutations aloha "hey {there}"]"
+]
+
+#rule: hello repeated#
+u:([you you've "you have"] already ["told me" said] [
+    hello howdy hiya hi greetings salutations yo aloha "hey {there}" "good [morning afternoon evening]"
+])
+[
+    "Hello again then!"
+    "Well, I'd rather say it too much than not enough."
+]
+
+#TODO_ROBOTNAME
+#TODO_KNOWLEDGE
+#rule: hello + robot name#
+#u:(_[hello howdy hiya hi "hey there"] ~robotname)
+#^first
+#[
+#"^containsKnowledge($Dialog/ID, greetings, Pepper) ^gotoReactivate(hello_again)"
+#"$Dialog/ID<>-1 $1 ^firstOptional[^queryKnowledge($Dialog/ID, name, ?)] $duration=^currentDateTime+0000-00-00 03:00 ^setExpiringKnowledge($Dialog/ID, greetings, Pepper, $duration)"
+#"$1  ^first["^queryKnowledge($Dialog/ID, name, ?)" "Human!"]"
+#]
+
+#rule: good morning#
+u:({good} morning)
+^rand[
+    "Good morning!"
+#    "Oh, it's still the morning! Good morning then!"
+]
+
+#TODO_ROBOTNAME
+#TODO_KNOWLEDGE
+#rule: good morning + robot name#
+#u:(good morning ~robotname)
+#^first[
+#    "$Dialog/Hour<12 Good morning ^first["^queryKnowledge($Dialog/ID, name, ?)" "Human!"]"
+#    "Oh, it's still the morning! Good morning then!"
+#]
+
+#rule: good afternoon#
+u:({good} afternoon)
+^rand[
+    "Good afternoon!"
+#    "Oh, it's still the afternoon! Good afternoon then!"
+#    "It's already the afternoon! Good afternoon then!"
+]
+
+#TODO_ROBOTNAME
+#TODO_KNOWLEDGE
+#rule: good afternoon + robot name#
+#u:(good afternoon ~robotname)
+#^first[
+#    "$Dialog/Hour>11 $Dialog/Hour<19 Good afternoon ^first["^queryKnowledge($Dialog/ID, name, ?)" "Human!"]"
+#    "$Dialog/Hour>19 $Dialog/Hour==19 It's still the afternoon! Good afternoon then!"
+#    "It's already the afternoon! Good afternoon then!"
+#]
+
+#rule: good evening#
+u:({good} evening)
+^rand[
+    "Good evening!"
+#    "Evening already! Good evening then!"
+]
+
+#TODO_ROBOTNAME
+#TODO_KNOWLEDGE
+#rule: good evening + robot name#
+#u:(good evening ~robotname)
+#^first[
+#    "$Dialog/Hour>16 Good evening ^first["^queryKnowledge($Dialog/ID, name, ?)" "Human!"]"
+#    "Evening already! Good evening then!"
+#]
+
+#rule: nice to meet you#
+u:([
+    "{"{it's} {really}" how} _["{very} [nice good]" great lovely] to meet you"
+    "{it's} {really} {such} _["a pleasure" "an honor"] to _["meet you" "make your acquaintance"]"
+    "{I'm} {so} {very} _[glad happy pleased delighted honored] to _["meet you" "make your acquaintance"]"
+])
+\style=joyful\
+^first[
+    "$meeting==done ^enableThenGoto(met_already)"
+    "it's $1 to meet you ^rand[too "as well"]! $meeting=done"
+    "it's $2 to $3 ^rand[too "as well"]! $meeting=done"
+    "I'm ^rand[$4 glad happy pleased delighted] to $5 ^rand[too "as well"] $meeting=done"
+    "The same for me {$user/name}! $meeting=done"
+]
+\style=neutral\
+
+#rule: met already
+u:($empty) %met_already
+^rand[
+    "Me too, but we've met already. I hope I'm not that easy to forget."
+    "There might be a few other Peppers that look a little like me, but you and I have already met!"
+    "I still remember you! Don't you? $wait_answer=yes"
+    "Oh! We've already met, don't you remember me? $wait_answer=yes"
+]
+        u1:($wait_answer==yes [Yes Yeah] {of course} {"I do" "I {do} remember {you}"})
+        ^rand["Very well then." "Great!" "I thought so!"] ^clear(wait_answer)
+
+        u1:($wait_answer==yes [No Nope] {"[~i_do_not ~i_did_not] {"remember {you}"}"})
+        ^rand[
+            "I might have confused you with someone else. Nice to meet you!"
+            "It's nice to meet you too, then."
+            "I'm happy to meet you again. I hope you will remember me this time."
+        ] ^clear(wait_answer)
+
+#rule:nice to see you {again}#
+u:([
+    "{it's how} _[nice good great lovely]"
+    "["it's {really} {such}" what] _["a pleasure"]"
+    "{I'm} {so} {very} _[glad happy pleased delighted]"
+   ]
+to see you {here} {again})
+\style=joyful\
+^first[
+    "["it's $1" "it's $2" "I'm $3"] to see you too!"
+    "The same for me, {$user/name}!"
+]
+\style=neutral\
