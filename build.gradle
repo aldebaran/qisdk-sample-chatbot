@@ -20,7 +20,7 @@ allprojects {
         google()
         jcenter()
         maven {
-            url 'http://kiwi.aldebaran.lan/android/sdk-internal/maven' // FIXME
+            url 'http://android.aldebaran.com/sdk/maven'
         }
 
     }
