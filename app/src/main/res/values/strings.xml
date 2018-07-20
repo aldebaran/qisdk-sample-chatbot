@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ChatbotSample</string>
+    <string name="qichatbot">QiChatBot</string>
+    <string name="dialog_flow">Dialog Flow</string>
+    <string name="suggestion_format">\"%s\"</string>
+
+
+    <!-- Globals -->
+    <string name="no">\"no\"</string>
+    <string name="yes">\"yes\"</string>
+    <string name="retry">Retry</string>
+    <string name="setting">Settings</string>
+    <string name="exit">Exit</string>
+    <string name="skip">Skip</string>
+
+    <string name="app_introduction">With the power of local and remote chat bots, I will try to reply to what you will say. Here are some examples of things you can tell me.</string>
+    <string name="you_can_say">you can say…</string>
+</resources>

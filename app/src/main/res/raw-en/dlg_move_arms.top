@@ -1,0 +1,188 @@
+topic: ~dlg_move_arms()
+
+#==================================================================#
+# Summary
+#==================================================================#
+#can you raise your arm
+#can you raise your left arm
+#can you raise your right arm
+#can you raise your arms
+#can you stretch your arm
+#can you stretch your left arm
+#can you stretch your right arm
+#private: notUnderstood2
+#private: what kind of movements
+#private: do it again
+
+#==================================================================#
+# Various move commands the robot can respond to
+#==================================================================#
+u:^private(^empty) %notUnderstood2
+[
+    "^rand[
+        "Ask me to do simpler moves, I can't move exactly like you humans do."
+        "I don't understand what you're asking, I probably don't know that movement yet."
+    ]"
+    "^releaseFocus"
+]
+
+u:^private([
+    "{what} {"kind of"} movements ?"
+    "how can I be more [precise specific] ?"
+    "help me be more [precise specific]"
+    "{"give me an"} example"
+])
+^rand[
+    "You can tell me to open my hands, or lift my arm, for example."
+    "You can ask me to move my head or move my hands."
+]
+
+u:^private (~do_it_again)
+^rand["Okay, I'll do it again." "Here I go again!"]
+^execute(launchAnimation, $RobotLastAnim, sync)
+^stayInScope
+
+#==================================================================#
+# Move - Arms
+#==================================================================#
+#RAISE YOUR ARMS#
+u:(["raise your arm" "~can_you raise your arm?"])
+Which arm should I raise?
+    u1:([
+         "{the} left {one}"
+         "your left arm"
+    ])
+    Let's go!
+    ^enableThenGoto(RAISE_LARM)
+
+    u1:([
+         "{the} right {one}"
+         "your right arm"
+    ])
+    Here I go!
+    ^enableThenGoto(RAISE_RARM)
+
+    u1:([
+        both
+        "left and right"
+        "right and left"
+    ])
+    And there it is!
+    ^enableThenGoto(RAISE_BOTHARMS)
+
+     u1:(~its_up_to_you)
+    ^rand[
+        "So, it will be the left! ^enableThenGoto(RAISE_LARM) "
+        "So, it will be the right! ^enableThenGoto(RAISE_RARM) "
+    ]
+
+u:(["raise your left arm" "~can_you $raise_leftarm_request=1 raise your left arm?"])
+^firstOptional["$raise_leftarm_request==1 Yes!"]
+Raising my left arm!
+^clear(raise_leftarm_request)
+^enableThenGoto(RAISE_LARM)
+
+u:(["raise your right arm" "~can_you $raise_rightarm_request=1 raise your right arm?"])
+^firstOptional["$raise_rightarm_request==1 Yes!"]
+Raising my right arm!
+^clear(raise_rightarm_request)
+^enableThenGoto(RAISE_RARM)
+
+u:([
+    "[raise lift] {both} your arms"
+    "~can_you $raise_arms_request=1 [raise lift] {both} your arms?"
+])
+^firstOptional["$raise_arms_request==1 Yes!"]
+And there it is!
+^clear(raise_arms_request)
+^enableThenGoto(RAISE_BOTHARMS)
+
+u:(^empty) %RAISE_LARM
+^execute(launchAnimation, uplarm, sync)
+$RobotLastAnim=uplarm
+
+u:(^empty) %RAISE_RARM
+^execute(launchAnimation, uprarm, sync)
+$RobotLastAnim=uprarm
+
+u:(^empty) %RAISE_BOTHARMS
+^execute(launchAnimation, upbotharms, sync)
+$RobotLastAnim=upbotharms
+
+#STRETCH YOUR ARMS#
+u:([
+    "[stretch open] your arm"
+    "~can_you [stretch open] your arm?"
+])
+^execute(launchAnimation, upbotharms, sync)
+Which arm?
+
+    u1:([
+         "{the} left {one}"
+         "your left arm"
+    ])
+    Let's go!
+    ^enableThenGoto(STRETCH_LARM)
+
+    u1:([
+         "{the} right {one}"
+         "[your the] right arm"
+    ])
+    Here I go!
+    ^enableThenGoto(STRETCH_RARM)
+
+    u1:([
+        both
+        "left and right"
+        "right and left"
+    ])
+    And there it is!
+    ^enableThenGoto(BOTH_ARMS)
+
+
+     u1:(~its_up_to_you)
+    ^rand[
+        "So, it will be the left! ^enableThenGoto(STRETCH_LARM)"
+        "So, it will be the right! ^enableThenGoto(STRETCH_RARM)"
+    ]
+
+
+u:([
+    "[stretch open] your left arm"
+    "~can_you $stretch_leftarm_request=1 [stretch open] your left arm?"
+])
+^firstOptional["$stretch_leftarm_request==1 Yes! And"]
+There it is!
+^clear(stretch_leftarm_request)
+^enableThenGoto(STRETCH_LARM)
+
+u:([
+    "[stretch "open"] your right arm"
+    "~can_you $stretch_rightarm_request=1 [stretch "open"] your right arm?"
+])
+^firstOptional["$stretch_rightarm_request==1 Yes! And"]
+There it is!
+^clear(stretch_rightarm_request)
+^enableThenGoto(STRETCH_RARM)
+
+
+u:([
+    "[stretch "open {wide}"] {"both of"} your arms"
+    "~can_you [stretch "open {wide}"] {"both of"} your arms?"# $stretch_arms_request=1"
+])
+^firstOptional["$stretch_arms_request==1 Yes!"]
+And there it is!
+^clear(stretch_arms_request)
+^enableThenGoto(BOTH_ARMS)
+
+u:(^empty) %STRETCH_LARM
+^execute(launchAnimation, stretchlarm, sync)
+$RobotLastAnim=stretchlarm
+
+u:(^empty) %STRETCH_RARM
+^execute(launchAnimation, stretchrarm, sync)
+$RobotLastAnim=stretchrarm
+
+u:(^empty) %BOTH_ARMS
+^execute(launchAnimation, stretchbotharms, sync)
+$RobotLastAnim=stretchbotharms
