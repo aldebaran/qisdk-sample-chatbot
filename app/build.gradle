@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-def qisdkVersion = '1.3.5'
+def qisdkVersion = '1.4.1'
 def supportVersion = '27.1.1'
 android {
     compileSdkVersion 27
