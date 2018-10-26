@@ -2,7 +2,7 @@
 
 ChatbotSample is an Android application for **Pepper the robot** that
 demonstrates how to implement a chatbot thanks to the **Android QiSDK**.
-(http://android.ald.softbankrobotics.com)
+(https://qisdk.softbankrobotics.com)
 
 
 This sample relies on an online **Dialogflow** agent and a local **qichatbot**.
